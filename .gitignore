@@ -1,0 +1,10 @@
+# Ignore all custom config files
+/Config/*
+!/Config/default.*.json
+
+# Ignore others folders
+/Export/*
+/Modules/*
+/Temp/*
+
+

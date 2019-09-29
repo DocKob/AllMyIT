@@ -1,0 +1,27 @@
+﻿{
+    "Get-DeviceInfos":  {
+                            "Full":  true,
+                            "Export":  true
+                        },
+    "Install-Certificate":  {
+                                "Name":  "AllMyIT",
+                                "Export":  true,
+                                "Password":  "Mot de passe de Test"
+                            },
+    "Install-Modules":  [
+                            "PSWindowsUpdate"
+                        ],
+    "Install-Apps":  {
+                         "AppsUrl":  [
+                                         "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"
+                                     ],
+                         "Ninite":  [
+                                        "firefox",
+                                        "7zip"
+                                    ],
+                         "Chocolatey":  [
+                                            "firefox",
+                                            "7zip"
+                                        ]
+                     }
+}
