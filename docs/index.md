@@ -13,6 +13,5 @@ Deploy and configure Windows devices with Powershell
 
 - Windows 10 / Windows Server 2016 / Windows Server 2019
 
-## Read the doc
+## Installation
 
-[dockob.github.io/AllMyIT](https://dockob.github.io/AllMyIT)

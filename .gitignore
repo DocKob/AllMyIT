@@ -7,4 +7,5 @@
 /Modules/*
 /Temp/*
 
-
+#Ignore MKDocs build
+/site/
