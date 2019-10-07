@@ -193,6 +193,8 @@
   </li>
 
       
+        
+      
     </ul>
   </div>
 </nav>
@@ -313,6 +315,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="configfile/" title="Config File" class="md-nav__link">
+      Config File
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -391,14 +405,33 @@
 <h2 id="requirements">Requirements</h2>
 <h3 id="minimal">Minimal</h3>
 <ul>
-<li>Windows 7 SP1 / Windows Server 2008 R2 SP1</li>
-<li><a href="https://www.microsoft.com/en-us/download/details.aspx?id=54616">Windows Management Framework 5.1</a></li>
+<li>
+<p>Windows 7 SP1 / Windows Server 2008 R2 SP1</p>
+</li>
+<li>
+<p><a href="https://www.microsoft.com/en-us/download/details.aspx?id=54616">Windows Management Framework 5.1</a></p>
+</li>
 </ul>
 <h3 id="recommended">Recommended</h3>
 <ul>
 <li>Windows 10 / Windows Server 2016 / Windows Server 2019</li>
 </ul>
 <h2 id="installation">Installation</h2>
+<p>Clone the repository :</p>
+<div class="codehilite"><pre><span></span><span class="n">Git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">DocKob</span><span class="o">/</span><span class="n">AllMyIT</span><span class="p">.</span><span class="n">git</span>
+</pre></div>
+
+
+<p>Or download the latest release : </p>
+<div class="codehilite"><pre><span></span><span class="n">Invoke</span><span class="o">-</span><span class="n">WebRequest</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">DocKob</span><span class="o">/</span><span class="n">AllMyIT</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">AllMyIT_Alpha_1</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">zip</span> <span class="o">-</span><span class="n">OutFile</span> <span class="n">AllMyIT_Alpha_1</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">zip</span>
+<span class="n">Expand</span><span class="o">-</span><span class="n">Archive</span> <span class="o">-</span><span class="n">LiteralPath</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">AllMyIT</span><span class="err">\</span><span class="n">Download</span><span class="err">\</span><span class="n">AllMyIT_Alpha_1</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">zip</span> <span class="o">-</span><span class="n">DestinationPath</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">AllMyIT</span><span class="err">\</span><span class="n">Download</span><span class="err">\</span><span class="n">AllMyIT</span>
+</pre></div>
+
+
+<p>Run AllMyIT  </p>
+<div class="codehilite"><pre><span></span><span class="n">cd</span> <span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">AllMyIT</span><span class="err">\</span><span class="n">Download</span><span class="err">\</span><span class="n">AllMyIT</span>
+<span class="k">Set</span><span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="k">Scope</span> <span class="n">Process</span> <span class="o">-</span><span class="k">Force</span> <span class="o">|</span> <span class="p">.</span><span class="err">\</span><span class="n">Install</span><span class="o">-</span><span class="n">Device</span><span class="p">.</span><span class="n">ps1</span> <span class="o">-</span><span class="k">Mode</span> <span class="n">Computer</span> <span class="o">-</span><span class="k">Verbose</span>
+</pre></div>
                 
                   
                 
@@ -415,6 +448,27 @@
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+        
+          <a href="configfile/" title="Config File" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Config File
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
