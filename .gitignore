@@ -1,11 +1,13 @@
 # Ignore all custom config files
-/Config/*
-!/Config/default.*.json
+/config/*
+!/config/default.*.json
 
-# Ignore others folders
-/Export/*
-/Modules/*
-/Temp/*
+# Ignore temp and export folders
+/export/
+/modules/*
+/temp/
+
+!/modules/AllMy*
 
 #Ignore MKDocs build
 /site/

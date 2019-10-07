@@ -40,7 +40,7 @@ function Import-Configuration() {
         [string]$Type
     )
 
-    $filename = (Join-Path $BaseFolder (Join-Path "Config/" ($profile + "." + $type + ".json")))
+    $filename = (Join-Path $BaseFolder (Join-Path "config/" ($profile + "." + $type + ".json")))
 
     if (Test-Path $filename) {
         $configuration = (Get-Content $filename | Out-String | ConvertFrom-Json)
@@ -59,7 +59,7 @@ function Save-Configuration($config) {
         ConvertTo-Json | Set-Content -Encoding UTF8 -Path $configuration.Filename
 }
 
-Function Install-Folders {
+Function New-Folders {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
@@ -78,18 +78,4 @@ Function Install-Folders {
             Write-Verbose -Message "Folder $($Folder) already exist at location $($location)"
         }
     } 
-}
-
-function Test-Command {
-    param($Command)
- 
-    $found = $false
-    $match = [Regex]::Match($Command, "(?<Verb>[a-z]{3,11})-(?<Noun>[a-z]{3,})", "IgnoreCase")
-    if ($match.Success) {
-        if (Get-Command -Verb $match.Groups["Verb"] -Noun $match.Groups["Noun"]) {
-            $found = $true
-        }
-    }
- 
-    $found
 }

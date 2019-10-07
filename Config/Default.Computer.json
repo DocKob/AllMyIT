@@ -1,13 +1,4 @@
 ﻿{
-    "Get-DeviceInfos":  {
-                            "Full":  true,
-                            "Export":  true
-                        },
-    "Install-Certificate":  {
-                                "Name":  "AllMyIT",
-                                "Export":  true,
-                                "Password":  "Mot de passe de Test"
-                            },
     "Install-Modules":  [
                             "PSWindowsUpdate"
                         ],

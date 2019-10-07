@@ -17,14 +17,23 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 }
 
 $BaseFolder = $PSScriptRoot
-.("$BaseFolder/Core/Core.ps1")
+.("$BaseFolder/core/Functions.ps1")
+New-Folders -Folders @("export", "temp")
 
 $VerbNoun = '*-*'
-$Functions = Get-ChildItem -Path (Join-Path $BaseFolder "/Core") -Filter $VerbNoun
+$Functions = Get-ChildItem -Path (Join-Path $BaseFolder "/core") -Filter $VerbNoun
 foreach ($f in $Functions) {
     Write-Verbose -Message ("Importing function {0}." -f $f.FullName)
     . $f.FullName
 }
+
+$Modules = Get-ChildItem (Join-Path $BaseFolder "/modules") | Where-Object { $_.Attributes -match 'Directory' }
+foreach ($m in $Modules) {
+    Write-Verbose -Message ("Importing module {0}." -f $m.Name)
+    Import-Module -FullyQualifiedName (Join-Path (Join-Path $BaseFolder "/modules") $m.Name)
+}
+
+Get-DeviceInfos -Export $true
 
 $configuration = Import-Configuration -Profile $Profile -Type $Mode
 $SelectedProfile = " Run with profile: " + $configuration.Filename
@@ -34,10 +43,6 @@ R: Install all available features from config file
 Q: Press Q to exist
 "@
 
-if ([bool]($InstallFunctions.PSobject.Properties.name -match "Get-DeviceInfos") -and ($configuration.("Get-DeviceInfos") -eq $true)) { 
-    Get-DeviceInfos -Full $configuration.("Get-DeviceInfos").Full -Export $configuration.("Get-DeviceInfos").Export
-}
-
 Do {
     Switch (Invoke-Menu -menu $InstallerMenu -title $SelectedProfile) {
         "R" {
@@ -45,7 +50,7 @@ Do {
                 Set-Storage
             }
             if ([bool]($InstallFunctions.PSobject.Properties.name -match "Install-Certificate")) { 
-                Install-Certificate -Name $configuration.("Install-Certificate").Name -Password $configuration.("Install-Certificate").Password -Export $configuration.("Install-Certificate").Export
+                New-Certificate -Name $configuration.("Install-Certificate").Name -Password $configuration.("Install-Certificate").Password -Export $configuration.("Install-Certificate").Export
             }
             if ([bool]($InstallFunctions.PSobject.Properties.name -match "Install-Modules")) {
                 Install-Modules -Modules $configuration.("Install-Modules")

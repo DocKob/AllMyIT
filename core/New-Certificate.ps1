@@ -1,4 +1,4 @@
-function Install-Certificate {
+function New-Certificate {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
@@ -14,8 +14,6 @@ function Install-Certificate {
         $Export = $false
     )
 
-    Install-Folders -Folders @("Export")
-
     $OldCert = Get-ChildItem -Path cert:\CurrentUser\My | Where-Object { $_.FriendlyName -eq $Name }
     if ($OldCert) {
         Write-Host "Cert Alreday Exist, Return"
@@ -26,12 +24,12 @@ function Install-Certificate {
         Write-Host "New Certificate created"
         
         if ($Export -eq $true) {
-            if (Test-Path (Join-Path $BaseFolder "Export\Cert_Export.pfx")) {
-                Remove-Item (Join-Path $BaseFolder "Export\Cert_Export.pfx")
+            if (Test-Path (Join-Path $BaseFolder "export\Cert_Export.pfx")) {
+                Remove-Item (Join-Path $BaseFolder "export\Cert_Export.pfx")
                 Write-Verbose -Message "File alreday exist: removed"
             }
             $cert = Get-ChildItem -Path cert:\CurrentUser\My | Where-Object { $_.Thumbprint -eq $($Create_Cert.Thumbprint) }
-            Export-PfxCertificate -Cert $cert -FilePath (Join-Path $BaseFolder "Export\Cert_Export.pfx") -Password (ConvertTo-SecureString -AsPlainText $Password -Force)
+            Export-PfxCertificate -Cert $cert -FilePath (Join-Path $BaseFolder "export\Cert_Export.pfx") -Password (ConvertTo-SecureString -AsPlainText $Password -Force)
             Write-Host "Certificate Exported"
         }
     }

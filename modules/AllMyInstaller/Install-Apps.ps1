@@ -16,8 +16,6 @@ Function Install-Apps {
         [Parameter(Mandatory = $false)]
         $UnzipArchives = $false
     )
-
-    Install-Folders -Folders @("Temp")
     
     Switch ($Installer) {
         "Ninite" {
@@ -25,7 +23,7 @@ Function Install-Apps {
    
             $ofs = '-'
             $niniteurl = "https://ninite.com/" + $Apps + "/ninite.exe"
-            $output = (Join-Path $BaseFolder "Temp/ninite.exe")
+            $output = (Join-Path $BaseFolder "temp/ninite.exe")
             if (Test-Path $Output) {
                 Write-Verbose -Message "File alreday exist"
             }
@@ -46,7 +44,7 @@ Function Install-Apps {
         "Url" {
             ForEach ($PackageUrl in $Apps) {
                 $OutputFile = Split-Path $PackageUrl -leaf
-                $Output = Join-Path $BaseFolder ("Temp/" + $OutputFile)
+                $Output = Join-Path $BaseFolder ("temp/" + $OutputFile)
                 Write-Host "Downloading from $($PackageUrl)"
                 if (Test-Path $Output) {
                     Write-Verbose -Message "File alreday exist"

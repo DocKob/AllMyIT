@@ -25,3 +25,17 @@ function Install-Features {
         }
     } 
 }
+
+function Test-Command {
+    param($Command)
+ 
+    $found = $false
+    $match = [Regex]::Match($Command, "(?<Verb>[a-z]{3,11})-(?<Noun>[a-z]{3,})", "IgnoreCase")
+    if ($match.Success) {
+        if (Get-Command -Verb $match.Groups["Verb"] -Noun $match.Groups["Noun"]) {
+            $found = $true
+        }
+    }
+
+    $found
+}
