@@ -18,16 +18,18 @@ How to build your config file.
 
 ## Install-Apps
 
+Example for Chocolatey : ["adobereader", "googlechrome", "jre8", "firefox", "7zip", "microsoft-teams"]
+
+Example for Ninite: ["firefox", "7zip", "filezilla", "onedrive", "vscode", "windirstat", "winscp"]
+
     "Install-Apps": {
 	        "AppsUrl": [
         		      "APP_URL"
             ],
             "Ninite": [
-        		      "firefox",
-        		      "7zip"
+        		      "firefox"
             ],
             "Chocolatey": [
-        		      "firefox",
         		      "7zip"
             ]
             }

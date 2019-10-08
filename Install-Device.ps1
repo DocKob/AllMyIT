@@ -33,7 +33,18 @@ foreach ($m in $Modules) {
     Import-Module -FullyQualifiedName (Join-Path (Join-Path $BaseFolder "/modules") $m.Name)
 }
 
-Get-DeviceInfos -Export $true
+$DeviceInfos = Get-DeviceInfos -Export $true
+
+Install-Modules -Modules @("PendingReboot")
+$TestReboot = Test-PendingReboot -SkipConfigurationManagerClientCheck -SkipPendingFileRenameOperationsCheck -Detailed
+$DeviceInfos | Add-Member -NotePropertyMembers @{Reboot = $TestReboot.IsRebootPending }
+
+if ($TestReboot.IsRebootPending) {
+    Write-Verbose -Message "Reboot pending"
+}
+else {
+    Write-Verbose -Message "No reboot needed"
+}
 
 $configuration = Import-Configuration -Profile $Profile -Type $Mode
 $SelectedProfile = " Run with profile: " + $configuration.Filename
@@ -57,11 +68,9 @@ Do {
             }
             if ([bool]($InstallFunctions.PSobject.Properties.name -match "Install-Apps")) {
                 $apps = $configuration.("Install-Apps")
-                # @("firefox", "7zip", "filezilla", "onedrive", "vscode", "windirstat", "winscp")
                 if ([bool]($apps.PSobject.Properties.name -match "Ninite")) {
                     Install-Apps -Installer "Ninite" -Apps $configuration.("Install-Apps").Ninite
                 }
-                # @('adobereader', 'googlechrome', 'jre8', 'firefox', '7zip', 'microsoft-teams')
                 if ([bool]($apps.PSobject.Properties.name -match "Chocolatey")) {
                     Install-Apps -Installer "Chocolatey" -Apps $configuration.("Install-Apps").Chocolatey
                 }

@@ -14,7 +14,7 @@ function Install-Modules {
             Find-Module -Name $Module -Repository 'PSGallery' | Save-Module -Path $Destination | Out-Null
         }
         else {
-            Write-Host "Module already exists"
+            Write-Verbose -Message "Module already exists"
         }
         Import-Module -FullyQualifiedName (Join-Path $Destination $Module)
     }

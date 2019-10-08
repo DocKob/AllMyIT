@@ -28,5 +28,6 @@ Function Get-DeviceInfos {
     if ($Export -eq $true) {
         Write-Verbose ($out | Out-String) -Verbose             
         $out | Export-CSV (Join-Path $BaseFolder "export\Device_Infos.csv") -Delimiter ";" -NoTypeInformation
+        return $out
     }
 }

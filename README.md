@@ -45,10 +45,10 @@ Clone the repository :
 
 Or download the latest release : 
 
-    Invoke-WebRequest https://github.com/DocKob/AllMyIT/releases/download/1.0.0/AllMyIT_Alpha_1.0.0.zip -OutFile AllMyIT_Alpha_1.0.0.zip
-    Expand-Archive -LiteralPath C:\Users\AllMyIT\Download\AllMyIT_Alpha_1.0.0.zip -DestinationPath C:\Users\AllMyIT\Download\AllMyIT
+    Invoke-WebRequest https://github.com/DocKob/AllMyIT/releases/download/1.0.1/AllMyIT_Alpha_1.0.1.zip -OutFile AllMyIT_Alpha_1.0.1.zip
+    Expand-Archive -LiteralPath C:\Users\AllMyIT\Download\AllMyIT_Alpha_1.0.1.zip -DestinationPath C:\Users\AllMyIT\Download\AllMyIT
 
-Run AllMyIT  
+Run AllMyIT in Powershell (run as Administrator)
 
     cd C:\Users\AllMyIT\Download\AllMyIT
     Set-ExecutionPolicy Bypass -Scope Process -Force | .\Install-Device.ps1 -Mode Computer -Verbose
