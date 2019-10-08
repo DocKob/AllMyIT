@@ -1,0 +1,18 @@
+﻿{
+    "Install-Modules": [
+        "PSWindowsUpdate"
+    ],
+    "Install-Apps": {
+        "AppsUrl": [
+            "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"
+        ],
+        "Ninite": [
+            "firefox",
+            "7zip"
+        ],
+        "Chocolatey": [
+            "firefox",
+            "7zip"
+        ]
+    }
+}

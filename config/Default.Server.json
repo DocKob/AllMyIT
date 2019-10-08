@@ -1,0 +1,16 @@
+﻿{
+    "Install-Certificate": {
+        "Name": "AllMyIT",
+        "Export": true,
+        "Password": "Mot de passe de Test"
+    },
+    "Install-Modules": [
+        "PSWindowsUpdate"
+    ],
+    "Install-Features": [
+        "Hyper-V",
+        "Hyper-V-PowerShell",
+        "Windows-Server-Backup"
+    ],
+    "Set-Storage": true
+}
