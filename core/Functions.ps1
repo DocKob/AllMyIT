@@ -17,11 +17,21 @@ Function Invoke-Menu {
         Clear-Host 
     }
 
-    $menuPrompt = $title
+    $menuprompt = "-" * $title.Length
     $menuprompt += "`n"
     $menuprompt += "-" * $title.Length
     $menuprompt += "`n"
+    $menuPrompt += $title
+    $menuprompt += "`n"
+    $menuprompt += "-" * $title.Length
+    $menuprompt += "`n"
+    $menuprompt += "-" * $title.Length
+    $menuprompt += "`n"
+    $menuprompt += "`n"
     $menuPrompt += $menu
+    $menuprompt += "`n`n`n"
+    $menuprompt += "Choose an option "
+    
  
     Read-Host -Prompt $menuprompt
  

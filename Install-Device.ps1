@@ -33,9 +33,10 @@ foreach ($m in $Modules) {
     Import-Module -FullyQualifiedName (Join-Path (Join-Path $BaseFolder "/modules") $m.Name)
 }
 
-$DeviceInfos = Get-DeviceInfos -Export $true
+$DeviceInfos = Get-DeviceInfos -Export $true -Wizard $false
 
 Install-Modules -Modules @("PendingReboot")
+Start-Sleep -milliseconds 500
 $TestReboot = Test-PendingReboot -SkipConfigurationManagerClientCheck -SkipPendingFileRenameOperationsCheck -Detailed
 $DeviceInfos | Add-Member -NotePropertyMembers @{Reboot = $TestReboot.IsRebootPending }
 
@@ -50,18 +51,26 @@ $configuration = Import-Configuration -Profile $Profile -Type $Mode
 $SelectedProfile = " Run with profile: " + $configuration.Filename
 $InstallFunctions = $configuration | Select-Object -Property * -ExcludeProperty @('Filename')
 $InstallerMenu = @"
-R: Install all available features from config file
+1: Install all available features from config file
+2: Run wizard features
+Q: Press Q to exist
+"@
+$WizardMenuTitle = "Launch wizard features"
+$WizardMenu = @"
+1: Get-DeviceInfos
+2: New-Certificate
+3: Set-Storage
 Q: Press Q to exist
 "@
 
 Do {
     Switch (Invoke-Menu -menu $InstallerMenu -title $SelectedProfile) {
-        "R" {
-            if ([bool]($InstallFunctions.PSobject.Properties.name -match "Set-Storage") -and ($configuration.("Set-Storage") -eq $true) -and ($Mode -match "Server")) { 
-                Set-Storage
+        "1" {
+            if ([bool]($InstallFunctions.PSobject.Properties.name -match "Set-Storage") -and ($configuration.("Set-Storage").Run -eq $true)) { 
+                Set-Storage -Run $configuration.("Set-Storage").Run -Wizard $configuration.("Set-Storage").Wizard
             }
             if ([bool]($InstallFunctions.PSobject.Properties.name -match "Install-Certificate")) { 
-                New-Certificate -Name $configuration.("Install-Certificate").Name -Password $configuration.("Install-Certificate").Password -Export $configuration.("Install-Certificate").Export
+                New-Certificate -Name $configuration.("Install-Certificate").Name -Password $configuration.("Install-Certificate").Password -Export $configuration.("Install-Certificate").Export -Wizard $configuration.("Install-Certificate").Wizard
             }
             if ([bool]($InstallFunctions.PSobject.Properties.name -match "Install-Modules")) {
                 Install-Modules -Modules $configuration.("Install-Modules")
@@ -82,6 +91,29 @@ Do {
                 Install-Features -Features $configuration.("Install-Features")
             }
             pause
+        }
+        "2" {
+            Do {
+                Switch (Invoke-Menu -menu $WizardMenu -title $WizardMenuTitle) {
+                    "1" {
+                        Get-DeviceInfos -Wizard $true
+                        $exit = $PSItem
+                    }
+                    "2" {
+                        New-Certificate -Wizard $true
+                        $exit = $PSItem
+                    }
+                    "3" {
+                        Set-Storage -Wizard $true
+                        $exit = $PSItem
+                    }
+                    "Q" {
+                        Read-Host "Return to main menu, press enter"
+                        $exit = $PSItem
+                    }
+                    Default { Start-Sleep -milliseconds 50 }
+                } 
+            } While ($exit -ne "Q")
         }
         "Q" {
             Save-Configuration $configuration
