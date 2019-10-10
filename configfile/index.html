@@ -405,15 +405,18 @@
                 <h1 id="config-file">Config File</h1>
 <p>How to build your config file.</p>
 <h2 id="install-certificate">Install-Certificate</h2>
+<p>Warning! if you set the password in config file, he's in clear ! after script run, please delete the config file or restrict config folder access.</p>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Certificate&quot;</span><span class="p">:</span> <span class="err">{</span>
             <span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;AllMyIT&quot;</span><span class="p">,</span>
             <span class="ss">&quot;Export&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
-            <span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span>
+            <span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span><span class="p">,</span>
+            <span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
 <span class="err">}</span>
 </pre></div>
 
 
 <h2 id="install-modules">Install-Modules</h2>
+<p>Search module on <a href="https://www.powershellgallery.com">powershellgallery.com</a></p>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Modules&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="ss">&quot;PSWindowsUpdate&quot;</span>
 <span class="p">]</span>
@@ -421,8 +424,10 @@
 
 
 <h2 id="install-apps">Install-Apps</h2>
-<p>Example for Chocolatey : ["adobereader", "googlechrome", "jre8", "firefox", "7zip", "microsoft-teams"]</p>
-<p>Example for Ninite: ["firefox", "7zip", "filezilla", "onedrive", "vscode", "windirstat", "winscp"]</p>
+<p>Official Website: <a href="https://chocolatey.org/packages">chocolatey.org/packages</a>
+Example for Chocolatey : ["adobereader", "googlechrome", "jre8", "firefox", "7zip", "microsoft-teams"]</p>
+<p>Official Website: <a href="https://ninite.com">ninite.com</a>
+Example for Ninite: ["firefox", "7zip", "filezilla", "onedrive", "vscode", "windirstat", "winscp"]</p>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Apps&quot;</span><span class="p">:</span> <span class="err">{</span>
         <span class="ss">&quot;AppsUrl&quot;</span><span class="p">:</span> <span class="p">[</span>
                   <span class="ss">&quot;APP_URL&quot;</span>
@@ -438,6 +443,7 @@
 
 
 <h2 id="install-features">Install-Features</h2>
+<p>You can execute : Get-WindowsFeature in Powershell and search feature name</p>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Features&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="ss">&quot;Hyper-V&quot;</span><span class="p">,</span>
             <span class="ss">&quot;Hyper-V-PowerShell&quot;</span><span class="p">,</span>
@@ -447,7 +453,11 @@
 
 
 <h2 id="set-storage">Set-Storage</h2>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Set-Storage&quot;</span><span class="p">:</span> <span class="k">true</span>
+<p>This function list all uninitialized disk and ask you if you want to configure it (Letter, Name, Size ...)</p>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Set-Storage&quot;</span><span class="p">:</span> <span class="err">{</span>
+            <span class="ss">&quot;Run&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+            <span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">true</span>
+<span class="err">}</span>
 </pre></div>
                 
                   
