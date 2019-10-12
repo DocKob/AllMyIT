@@ -5,11 +5,14 @@
 
 Deploy and configure Windows devices with Powershell
 
+
+![AllMyIT Alpha 1.0.2](https://i2.wp.com/hitea.fr/wp-content/uploads/2019/10/AllMyIT.jpg?fit=609%2C103&ssl=1)
+
   
 
 ## Requirements
 
-  
+
 
 ### Minimal
 
@@ -45,8 +48,8 @@ Clone the repository :
 
 Or download the latest release : 
 
-    Invoke-WebRequest https://github.com/DocKob/AllMyIT/releases/download/1.0.1/AllMyIT_Alpha_1.0.1.zip -OutFile AllMyIT_Alpha_1.0.1.zip
-    Expand-Archive -LiteralPath C:\Users\AllMyIT\Download\AllMyIT_Alpha_1.0.1.zip -DestinationPath C:\Users\AllMyIT\Download\AllMyIT
+    Invoke-WebRequest http://hitea.fr/wp-content/uploads/2019/10/AllMyIT.zip -OutFile AllMyIT_Alpha.zip
+    Expand-Archive -LiteralPath C:\Users\AllMyIT\Download\AllMyIT_Alpha.zip -DestinationPath C:\Users\AllMyIT\Download\AllMyIT
 
 Run AllMyIT in Powershell (run as Administrator)
 
