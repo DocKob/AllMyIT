@@ -1,9 +1,11 @@
 
 # Getting started
 
-  
 
 Deploy and configure Windows devices with Powershell
+
+
+The documentation is build for latest release, not for the repository branchs
 
 
 ![AllMyIT Alpha 1.0.2](https://i2.wp.com/hitea.fr/wp-content/uploads/2019/10/AllMyIT.jpg?fit=609%2C103&ssl=1)

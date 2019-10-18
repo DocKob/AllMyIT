@@ -9,21 +9,22 @@ function Install-Features {
     )
 
     if (! (Test-Command -Command "Install-WindowsFeature")) {
-        return
+        Write-Verbose -Message "Device is not a server ! Exit"
     }
+    else {
+        $InstalledFeatures = Get-WindowsFeature | Where-Object InstallState -eq "Installed"
 
-    $InstalledFeatures = Get-WindowsFeature | Where-Object InstallState -eq "Installed"
-
-    foreach ($Feature in $Features) {
+        foreach ($Feature in $Features) {
     
-        if (!($InstalledFeatures.Name -match $Feature)) {
-            Write-Host "Installing $Feature"
-            Install-WindowsFeature $Feature
-        }
-        else {
-            Write-Host "Feature $Feature is already installed"
-        }
-    } 
+            if (!($InstalledFeatures.Name -match $Feature)) {
+                Write-Host "Installing $Feature"
+                Install-WindowsFeature $Feature
+            }
+            else {
+                Write-Host "Feature $Feature is already installed"
+            }
+        } 
+    }
 }
 
 function Test-Command {

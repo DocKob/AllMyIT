@@ -35,6 +35,7 @@ Deploy and configure Windows devices with Powershell
 ## Read the doc
 
 
+The documentation is build for latest release, not for the repository branchs
 
 [dockob.github.io/AllMyIT](https://dockob.github.io/AllMyIT)
   

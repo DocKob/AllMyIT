@@ -14,5 +14,8 @@
                                             "firefox",
                                             "7zip"
                                         ]
-                     }
+                     },
+    "Clear-Disk":  {
+                       "Custom":  false
+                   }
 }
