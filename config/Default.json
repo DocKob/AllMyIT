@@ -1,0 +1,35 @@
+﻿{
+    "Install-Modules":  [
+                            "PSWindowsUpdate"
+                        ],
+    "Install-Apps":  {
+                         "AppsUrl":  [
+                                         "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"
+                                     ],
+                         "Ninite":  [
+                                        "firefox"
+                                    ],
+                         "Chocolatey":  [
+                                            "7zip"
+                                        ]
+                     },
+    "Clear-Disk":  {
+                       "Custom":  false
+                   },
+    "Install-Certificate":  {
+                                "Name":  "AllMyIT",
+                                "Export":  true,
+                                "Password":  "Password",
+                                "Wizard":  false
+                            },
+    "Install-Features":  [
+                             "Hyper-V",
+                             "Hyper-V-PowerShell",
+                             "Windows-Server-Backup"
+                         ],
+    "Set-Storage":  {
+                        "Run":  true,
+                        "Wizard":  true
+                    },
+    "Restart-Service":  "NlaSvc"
+}

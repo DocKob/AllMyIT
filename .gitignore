@@ -1,6 +1,6 @@
 # Ignore all custom config files
 /config/*
-!/config/default.*.json
+!/config/default.json
 
 # Ignore temp and export folders
 /export/
