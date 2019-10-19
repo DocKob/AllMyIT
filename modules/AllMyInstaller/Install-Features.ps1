@@ -3,10 +3,17 @@ function Install-Features {
         SupportsShouldProcess = $true
     )]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        $Features
+        $Features,
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        $Wizard = $false
     )
+
+    if ($Wizard -eq $true) {
+        $Features = Read-Host "which server feature do you want to install ?"
+    }
 
     if (! (Test-Command -Command "Install-WindowsFeature")) {
         Write-Verbose -Message "Device is not a server ! Exit"

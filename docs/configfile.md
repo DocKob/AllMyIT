@@ -10,20 +10,15 @@ Warning, if you set the password in config file, he's in clear !
 After script run, please delete the config file or restrict "AllMyIT\config" access.
 
 
-## Install-Certificate
+## Naning the config file
 
-    "Install-Certificate": {
-			    "Name": "AllMyIT",
-			    "Export": true,
-			    "Password": "Password",
-                "Wizard": false
-    }
+Config file is .json.
 
-Create a certificat for password encryption.
+Only use Alphanumeric characters for of filename.
 
-Set the Name and the password. If export is true, the certificate is exported to "AllMyIT\export"
+## Installer section
 
-## Install-Modules
+### Install-Modules
 
     "Install-Modules": [
 			"PSWindowsUpdate"
@@ -35,7 +30,7 @@ Insert module names separated by commas
 
 ![Powershell Gallery](https://i0.wp.com/hitea.fr/wp-content/uploads/2019/10/Powershell-gallery.jpg?fit=750%2C330)
 
-## Install-Apps
+### Install-Apps
 
     "Install-Apps": {
 	        "AppsUrl": [
@@ -65,7 +60,7 @@ Insert module names separated by commas
 
 ![Chocolatey](https://i2.wp.com/hitea.fr/wp-content/uploads/2019/10/choco-search.jpg?fit=750%2C392)
 
-## Install-Features
+### Install-Features
 
     "Install-Features": [
 			    "Hyper-V",
@@ -75,7 +70,23 @@ Insert module names separated by commas
 
 You can execute : Get-WindowsFeature in Powershell and search feature name
 
-## Set-Storage
+
+## Toolbox section
+
+### Install-Certificate
+
+    "Install-Certificate": {
+			    "Name": "AllMyIT",
+			    "Export": true,
+			    "Password": "Password",
+                "Wizard": false
+    }
+
+Create a certificat for password encryption.
+
+Set the Name and the password. If export is true, the certificate is exported to "AllMyIT\export"
+
+### Set-Storage
 
     "Set-Storage": {
 			    "Run": true,
@@ -83,3 +94,21 @@ You can execute : Get-WindowsFeature in Powershell and search feature name
     }
 
 This function list all uninitialized disk and ask you if you want to configure it (Letter, Name, Size ...)
+
+### Clear-Disk
+
+    "Clear-Disk":  {
+                       "Custom":  false
+                   }
+
+Perform a disk cleanup and temp folders cleanup
+
+Set "Custom" to "Lenovo" for add the lenovo specifics folders
+
+### Restart-Service
+
+    "Restart-Service": [
+        "NlaSvc"
+    ]
+
+Set services name for restart (dependancies restart auto)

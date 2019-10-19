@@ -1,11 +1,7 @@
 [CmdletBinding(
     SupportsShouldProcess = $true
 )]
-param (        
-    [Parameter(Mandatory = $false)]
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet('Computer', 'Server')]
-    $Mode = "Computer",
+param (
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
     $Profile = "Default"
@@ -16,14 +12,9 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     Exit
 }
 
-$BaseFolder = $PSScriptRoot
-.("$BaseFolder/core/Functions.ps1")
-.("$BaseFolder/core/DeviceInfos.ps1")
-New-Folders -Folders @("export", "temp")
+.("$PSScriptRoot/internals/Functions.ps1")
 
-Install-WinRm -StartService $True
-
-$DeviceInfos = Get-DeviceInfos -Export $true
+$BaseFolder = Get-RegKey -Key "BaseFolder"
 
 $Modules = Get-ChildItem (Join-Path $BaseFolder "/modules") | Where-Object { $_.Attributes -match 'Directory' }
 foreach ($m in $Modules) {
@@ -32,35 +23,45 @@ foreach ($m in $Modules) {
 }
 
 $VerbNoun = '*-*'
-$Functions = Get-ChildItem -Path (Join-Path $BaseFolder "/core") -Filter $VerbNoun
+$Functions = Get-ChildItem -Path (Join-Path $BaseFolder "/internals") -Filter $VerbNoun
 foreach ($f in $Functions) {
     Write-Verbose -Message ("Importing function {0}." -f $f.FullName)
     . $f.FullName
 }
 
-Install-Modules -Modules @("PendingReboot")
-$TestReboot = Test-PendingReboot -SkipConfigurationManagerClientCheck -SkipPendingFileRenameOperationsCheck -Detailed
-$DeviceInfos | Add-Member -NotePropertyMembers @{Reboot = $TestReboot.IsRebootPending }
-
-$configuration = Import-Configuration -Profile $Profile -Type $Mode
+$DeviceInfos = Get-DeviceInfos -Export $true
+$configuration = Import-Configuration -Profile $Profile
 
 $SelectedProfile = " Run with profile: " + $configuration.Filename
 $WizardMenu = @"
 0: Open Installer
 1: Open Toolbox
-2: Restart Computer (if needed)
+2: Manage Device
+3: New-AmiModule
+4: Restart Computer (if needed)
 Q: Press Q to exist
 "@
 
 Do {
     Switch (Invoke-Menu -menu $WizardMenu -title $SelectedProfile) {
         "0" {
-            Install-Device -Mode $Mode -Configuration $configuration
+            Install-Device -Configuration $configuration
         }
         "1" {
             Invoke-Toolbox -Configuration $configuration
         }
         "2" {
+            Edit-Device -Configuration $configuration
+        }
+        "3" {
+            $Name = Read-Host "Wich name for the module ?"
+            $Path = Join-Path $BaseFolder "/modules"
+            New-AmiModule -Path $Path -Name $Name
+        }
+        "4" {
+            Install-Modules -Modules @("PendingReboot")
+            $TestReboot = Test-PendingReboot -SkipConfigurationManagerClientCheck -SkipPendingFileRenameOperationsCheck -Detailed
+            $DeviceInfos | Add-Member -NotePropertyMembers @{Reboot = $TestReboot.IsRebootPending }
             if ($DeviceInfos.Reboot) {
                 Write-Verbose -Message "Reboot pending"
                 switch (Read-Host "Reboot pending! do you want to restart now ? (y)es to confim") {

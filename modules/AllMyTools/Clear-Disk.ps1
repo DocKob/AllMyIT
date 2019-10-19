@@ -21,9 +21,21 @@
 function Clear-Disk {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $False, ValueFromPipeline = $True)]
-        $Custom
+        [Parameter(Mandatory = $False)]
+        $Custom,
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        $Wizard = $false
     )
+
+    if ($Wizard -eq $true) {
+        switch (Read-Host "Add custom folders ? (1)Lenovo") {
+            "1" {
+                    $Custom = "Lenovo"
+                }
+            default {}
+        }
+    }
     
     $objShell = New-Object -ComObject Shell.Application
     

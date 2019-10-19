@@ -3,10 +3,10 @@ Function Install-Apps {
         SupportsShouldProcess = $true
     )]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         $Installer,
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         $Apps,
         [Parameter(Mandatory = $false)]
@@ -14,9 +14,24 @@ Function Install-Apps {
         [Parameter(Mandatory = $false)]
         $ExecuteExe = $false,
         [Parameter(Mandatory = $false)]
-        $UnzipArchives = $false
+        $UnzipArchives = $false,
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        $Wizard = $false
     )
-    
+
+    if ($Wizard -eq $true) {
+        Switch (Read-Host "which store do you want to use ? (1)Chocolatey (2)Url") {
+            "1" {
+                $Installer = "Chocolatey"
+            }
+            "2" {
+                $Installer = "Url"
+            }
+        }
+        $Apps = Read-Host "which application do you want to install ?"
+    }
+
     Switch ($Installer) {
         "Ninite" {
             Write-Host "Downloading Ninite ..."

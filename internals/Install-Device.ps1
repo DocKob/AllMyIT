@@ -2,11 +2,7 @@ function Install-Device {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
-    param (        
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [ValidateSet('Computer', 'Server')]
-        $Mode,
+    param (
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         $configuration
@@ -22,7 +18,7 @@ Q: Press Q to exist
 "@
 
     Do {
-        Switch (Invoke-Menu -menu $WizardMenu -title $SelectedProfile) {
+        Switch (Invoke-Menu -menu $WizardMenu -title $SelectedProfile -cls) {
             "0" {
                 if ([bool]($configuration.PSobject.Properties.name -match "Install-Modules")) {
                     Install-Modules -Modules $configuration.("Install-Modules")
@@ -39,37 +35,21 @@ Q: Press Q to exist
                         Install-Apps -Installer "Url" -Apps $configuration.("Install-Apps").AppsUrl
                     }
                 }
-                if ([bool]($configuration.PSobject.Properties.name -match "Install-Features") -and ($Mode -match "Server")) { 
+                if ([bool]($configuration.PSobject.Properties.name -match "Install-Features")) { 
                     Install-Features -Features $configuration.("Install-Features")
                 }
             }
             "1" {
-                $Module = Read-Host "which module do you want to install ?"
-                Install-Modules -Modules @($Module)
+                Install-Modules -Wizard $true
             }
             "2" {
-                Switch (Read-Host "which store do you want to use ? (1)Chocolatey (2)Url") {
-                    "1" {
-                        $App = Read-Host "which application do you want to install ?"
-                        Install-Apps -Installer "Chocolatey" -Apps @($App)
-                    }
-                    "2" {
-                        $App = Read-Host "which application do you want to install ?"
-                        Install-Apps -Installer "Url" -Apps @($App)
-                    }
-                }
-                
+                Install-Apps -Wizard $true
             }
             "3" {
-                if ($Mode -match "Server") {
-                    $Feature = Read-Host "which server feature do you want to install ?"
-                    Install-Features -Features @($Feature)
-                }
-                else {
-                    Write-Verbose -Message "Device is not a server ! Exit"
-                }
+                Install-Features -Wizard $true
             }
             "Q" {
+                Clear-Host
                 Return
             }
             Default { Start-Sleep -milliseconds 100 }
