@@ -44,13 +44,30 @@ Q: Press Q to exist
                 }
             }
             "1" {
-                Write-Verbose -Message "Function not implemented"
+                $Module = Read-Host "which module do you want to install ?"
+                Install-Modules -Modules @($Module)
             }
             "2" {
-                Write-Verbose -Message "Function not implemented"
+                Switch (Read-Host "which store do you want to use ? (1)Chocolatey (2)Url") {
+                    "1" {
+                        $App = Read-Host "which application do you want to install ?"
+                        Install-Apps -Installer "Chocolatey" -Apps @($App)
+                    }
+                    "2" {
+                        $App = Read-Host "which application do you want to install ?"
+                        Install-Apps -Installer "Url" -Apps @($App)
+                    }
+                }
+                
             }
             "3" {
-                Write-Verbose -Message "Function not implemented"
+                if ($Mode -match "Server") {
+                    $Feature = Read-Host "which server feature do you want to install ?"
+                    Install-Features -Features @($Feature)
+                }
+                else {
+                    Write-Verbose -Message "Device is not a server ! Exit"
+                }
             }
             "Q" {
                 Return

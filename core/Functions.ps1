@@ -89,3 +89,18 @@ Function New-Folders {
         }
     } 
 }
+
+function Install-WinRm {
+    param(
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [bool]$StartService = $false
+    )
+    
+    winrm quickconfig -q
+
+    if ($StartService) {
+        Start-Service WinRM
+        Set-Service WinRM -StartupType Automatic
+    }
+}

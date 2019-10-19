@@ -21,11 +21,9 @@ $BaseFolder = $PSScriptRoot
 .("$BaseFolder/core/DeviceInfos.ps1")
 New-Folders -Folders @("export", "temp")
 
-$DeviceInfos = Get-DeviceInfos -Export $true
+Install-WinRm -StartService $True
 
-winrm quickconfig -q
-Start-Service WinRM
-Set-Service WinRM -StartupType Automatic
+$DeviceInfos = Get-DeviceInfos -Export $true
 
 $Modules = Get-ChildItem (Join-Path $BaseFolder "/modules") | Where-Object { $_.Attributes -match 'Directory' }
 foreach ($m in $Modules) {
@@ -34,7 +32,7 @@ foreach ($m in $Modules) {
 }
 
 $VerbNoun = '*-*'
-$Functions = Get-ChildItem -Path (Join-Path $BaseFolder "/core/include") -Filter $VerbNoun
+$Functions = Get-ChildItem -Path (Join-Path $BaseFolder "/core") -Filter $VerbNoun
 foreach ($f in $Functions) {
     Write-Verbose -Message ("Importing function {0}." -f $f.FullName)
     . $f.FullName
@@ -44,19 +42,13 @@ Install-Modules -Modules @("PendingReboot")
 $TestReboot = Test-PendingReboot -SkipConfigurationManagerClientCheck -SkipPendingFileRenameOperationsCheck -Detailed
 $DeviceInfos | Add-Member -NotePropertyMembers @{Reboot = $TestReboot.IsRebootPending }
 
-if ($DeviceInfos.Reboot) {
-    Write-Verbose -Message "Reboot pending"
-}
-else {
-    Write-Verbose -Message "No reboot needed"
-}
-
 $configuration = Import-Configuration -Profile $Profile -Type $Mode
 
 $SelectedProfile = " Run with profile: " + $configuration.Filename
 $WizardMenu = @"
 0: Open Installer
 1: Open Toolbox
+2: Restart Computer (if needed)
 Q: Press Q to exist
 "@
 
@@ -67,6 +59,18 @@ Do {
         }
         "1" {
             Invoke-Toolbox -Configuration $configuration
+        }
+        "2" {
+            if ($DeviceInfos.Reboot) {
+                Write-Verbose -Message "Reboot pending"
+                switch (Read-Host "Reboot pending! do you want to restart now ? (y)es to confim") {
+                    "y" { Restart-Computer }
+                    Default { }
+                }
+            }
+            else {
+                Write-Host "No reboot needed"
+            }
         }
         "Q" {
             Save-Configuration $configuration
