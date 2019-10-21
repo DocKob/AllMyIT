@@ -300,13 +300,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-modules" class="md-nav__link">
-    Install-Modules
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#install-apps" class="md-nav__link">
     Install-Apps
   </a>
@@ -348,8 +341,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#clear-disk" class="md-nav__link">
-    Clear-Disk
+  <a href="#remove-temp" class="md-nav__link">
+    Remove-Temp
   </a>
   
 </li>
@@ -425,13 +418,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-modules" class="md-nav__link">
-    Install-Modules
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#install-apps" class="md-nav__link">
     Install-Apps
   </a>
@@ -473,8 +459,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#clear-disk" class="md-nav__link">
-    Clear-Disk
+  <a href="#remove-temp" class="md-nav__link">
+    Remove-Temp
   </a>
   
 </li>
@@ -513,34 +499,41 @@
                 <h1 id="config-file">Config File</h1>
 <p>How to build your config file.</p>
 <p>Config files are located in "AllMyIT\config"</p>
-<p>Warning, if you set the password in config file, he's in clear ! </p>
+<p>Warning, if you set the password in config file, he's in clear !</p>
 <p>After script run, please delete the config file or restrict "AllMyIT\config" access.</p>
 <h2 id="naning-the-config-file">Naning the config file</h2>
-<p>Config file is .json.</p>
-<p>Only use Alphanumeric characters for of filename.</p>
+<p>Only use Alphanumeric characters for the filename.</p>
 <h2 id="installer-section">Installer section</h2>
-<h3 id="install-modules">Install-Modules</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Modules&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="ss">&quot;PSWindowsUpdate&quot;</span>
-<span class="p">]</span>
-</pre></div>
-
-
-<p>Search module on <a href="https://www.powershellgallery.com">powershellgallery.com</a></p>
-<p>Insert module names separated by commas</p>
-<p><img alt="Powershell Gallery" src="https://i0.wp.com/hitea.fr/wp-content/uploads/2019/10/Powershell-gallery.jpg?fit=750%2C330" /></p>
 <h3 id="install-apps">Install-Apps</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Apps&quot;</span><span class="p">:</span> <span class="err">{</span>
-        <span class="ss">&quot;AppsUrl&quot;</span><span class="p">:</span> <span class="p">[</span>
-                  <span class="ss">&quot;APP_URL&quot;</span>
-        <span class="p">],</span>
-        <span class="ss">&quot;Ninite&quot;</span><span class="p">:</span> <span class="p">[</span>
-                  <span class="ss">&quot;firefox&quot;</span>
-        <span class="p">],</span>
-        <span class="ss">&quot;Chocolatey&quot;</span><span class="p">:</span> <span class="p">[</span>
-                  <span class="ss">&quot;7zip&quot;</span>
-        <span class="p">]</span>
-        <span class="err">}</span>
+
+<span class="ss">&quot;AppsUrl&quot;</span><span class="p">:</span> <span class="p">[</span>
+
+<span class="ss">&quot;APP_URL&quot;</span>
+
+<span class="p">],</span>
+
+<span class="ss">&quot;Ninite&quot;</span><span class="p">:</span> <span class="p">[</span>
+
+<span class="ss">&quot;firefox&quot;</span>
+
+<span class="p">],</span>
+
+<span class="ss">&quot;Chocolatey&quot;</span><span class="p">:</span> <span class="p">[</span>
+
+<span class="ss">&quot;7zip&quot;</span>
+
+<span class="p">],</span>
+
+<span class="ss">&quot;Lnk&quot;</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+
+<span class="ss">&quot;ExecuteExe&quot;</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+
+<span class="ss">&quot;UnzipArchives&quot;</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+
+<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="err">}</span>
 </pre></div>
 
 
@@ -550,24 +543,32 @@
 </li>
 <li>
 <p>Ninite example: <a href="https://ninite.com">ninite.com</a></p>
-<p>["firefox", "7zip", "filezilla", "onedrive", "vscode", "windirstat", "winscp"]</p>
 </li>
 </ul>
+<p>["firefox", "7zip", "filezilla", "onedrive", "vscode", "windirstat", "winscp"]</p>
 <p><img alt="Ninite" src="https://i1.wp.com/hitea.fr/wp-content/uploads/2019/10/ninite-search.jpg?fit=750%2C422" /></p>
 <p><img alt="Ninite 2" src="https://i0.wp.com/hitea.fr/wp-content/uploads/2019/10/ninite-search-2.jpg?fit=750%2C398" /></p>
 <ul>
-<li>
-<p>Chocolatey example: <a href="https://chocolatey.org/packages">chocolatey.org/packages</a></p>
-<p>["adobereader", "googlechrome", "jre8", "firefox", "7zip", "microsoft-teams"]</p>
-</li>
+<li>Chocolatey example: <a href="https://chocolatey.org/packages">chocolatey.org/packages</a></li>
 </ul>
+<p>["adobereader", "googlechrome", "jre8", "firefox", "7zip", "microsoft-teams"]</p>
 <p><img alt="Chocolatey" src="https://i2.wp.com/hitea.fr/wp-content/uploads/2019/10/choco-search.jpg?fit=750%2C392" /></p>
 <h3 id="install-features">Install-Features</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Features&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="ss">&quot;Hyper-V&quot;</span><span class="p">,</span>
-            <span class="ss">&quot;Hyper-V-PowerShell&quot;</span><span class="p">,</span>
-            <span class="ss">&quot;Windows-Server-Backup&quot;</span>
-<span class="p">]</span>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Features&quot;</span><span class="p">:</span> <span class="err">{</span>
+
+<span class="ss">&quot;Features&quot;</span><span class="p">:</span> <span class="p">[</span>
+
+<span class="ss">&quot;Hyper-V&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Hyper-V-PowerShell&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Windows-Server-Backup&quot;</span>
+
+<span class="p">],</span>
+
+<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="err">}</span>
 </pre></div>
 
 
@@ -575,10 +576,15 @@
 <h2 id="toolbox-section">Toolbox section</h2>
 <h3 id="install-certificate">Install-Certificate</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Certificate&quot;</span><span class="p">:</span> <span class="err">{</span>
-            <span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;AllMyIT&quot;</span><span class="p">,</span>
-            <span class="ss">&quot;Export&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
-            <span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span><span class="p">,</span>
-            <span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;AllMyIT&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Export&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+
+<span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
+
 <span class="err">}</span>
 </pre></div>
 
@@ -587,26 +593,37 @@
 <p>Set the Name and the password. If export is true, the certificate is exported to "AllMyIT\export"</p>
 <h3 id="set-storage">Set-Storage</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Set-Storage&quot;</span><span class="p">:</span> <span class="err">{</span>
-            <span class="ss">&quot;Run&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
-                    <span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">true</span>
+
+<span class="ss">&quot;Run&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+
+<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">true</span>
+
 <span class="err">}</span>
 </pre></div>
 
 
 <p>This function list all uninitialized disk and ask you if you want to configure it (Letter, Name, Size ...)</p>
-<h3 id="clear-disk">Clear-Disk</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Clear-Disk&quot;</span><span class="p">:</span>  <span class="err">{</span>
-                   <span class="ss">&quot;Custom&quot;</span><span class="p">:</span>  <span class="k">false</span>
-               <span class="err">}</span>
+<h3 id="remove-temp">Remove-Temp</h3>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Remove-Temp&quot;</span><span class="p">:</span> <span class="err">{</span>
+
+<span class="ss">&quot;AddFolder&quot;</span><span class="p">:</span> <span class="ss">&quot;None&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="err">}</span>
 </pre></div>
 
 
 <p>Perform a disk cleanup and temp folders cleanup</p>
 <p>Set "Custom" to "Lenovo" for add the lenovo specifics folders</p>
 <h3 id="restart-service">Restart-Service</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Restart-Service&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="ss">&quot;NlaSvc&quot;</span>
-<span class="p">]</span>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Restart-Service&quot;</span><span class="p">:</span> <span class="err">{</span>
+
+<span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;NlaSvc&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="err">}</span>
 </pre></div>
 
 
