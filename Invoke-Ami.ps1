@@ -34,32 +34,35 @@ $configuration = Import-Configuration -Profile $Profile
 
 $SelectedProfile = " Run with profile: " + $configuration.Filename
 $WizardMenu = @"
-0: Open Installer
-1: Open Toolbox
-2: Manage Device
-3: New-AmiModule
-4: Restart Computer (if needed)
+0: Run config file
+1: Open Installer
+2: Open Toolbox
+3: Manage Device
+4: New-AmiModule
+5: Restart Computer (if needed)
 Q: Press Q to exist
 "@
 
 Do {
     Switch (Invoke-Menu -menu $WizardMenu -title $SelectedProfile) {
         "0" {
-            Install-Device -Configuration $configuration
+            Invoke-ConfigFile -Configuration $configuration
         }
         "1" {
-            Invoke-Toolbox -Configuration $configuration
+            Invoke-Installer -Configuration $configuration
         }
         "2" {
-            Edit-Device -Configuration $configuration
+            Invoke-Tools -Configuration $configuration
         }
         "3" {
+            Invoke-Compute -Configuration $configuration
+        }
+        "4" {
             $Name = Read-Host "Wich name for the module ?"
             $Path = Join-Path $BaseFolder "/modules"
             New-AmiModule -Path $Path -Name $Name
         }
-        "4" {
-            Install-Modules -Modules @("PendingReboot")
+        "5" {
             $TestReboot = Test-PendingReboot -SkipConfigurationManagerClientCheck -SkipPendingFileRenameOperationsCheck -Detailed
             $DeviceInfos | Add-Member -NotePropertyMembers @{Reboot = $TestReboot.IsRebootPending }
             if ($DeviceInfos.Reboot) {

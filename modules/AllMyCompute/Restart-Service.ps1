@@ -1,8 +1,9 @@
 function Restart-Service {
     Param(
-        [Parameter(Mandatory = $false)][String]$ServiceName,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
+        [String]$ServiceName,
+        [Parameter(Mandatory = $false)]
         $Wizard = $false
     )
 

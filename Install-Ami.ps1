@@ -23,3 +23,4 @@ Set-RegKey -Key "Mode" -Value $Mode -Type "String"
 Install-WinRm -StartService $True
 Install-PackageStore -Name Nuget
 Get-DeviceInfos -Export $true
+Install-Modules -Modules @("PendingReboot", "PSWindowsUpdate")

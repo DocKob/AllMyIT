@@ -1,7 +1,4 @@
 ﻿{
-    "Install-Modules":  [
-                            "PSWindowsUpdate"
-                        ],
     "Install-Apps":  {
                          "AppsUrl":  [
                                          "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"
@@ -11,25 +8,36 @@
                                     ],
                          "Chocolatey":  [
                                             "7zip"
-                                        ]
+                                        ],
+                         "Lnk":  false,
+                         "ExecuteExe":  false,
+                         "UnzipArchives":  false,
+                         "Wizard":  false
                      },
-    "Clear-Disk":  {
-                       "Custom":  false
-                   },
     "Install-Certificate":  {
                                 "Name":  "AllMyIT",
                                 "Export":  true,
                                 "Password":  "Password",
                                 "Wizard":  false
                             },
-    "Install-Features":  [
-                             "Hyper-V",
-                             "Hyper-V-PowerShell",
-                             "Windows-Server-Backup"
-                         ],
+    "Install-Features":  {
+                             "Features":  [
+                                              "Hyper-V",
+                                              "Hyper-V-PowerShell",
+                                              "Windows-Server-Backup"
+                                          ],
+                             "Wizard":  false
+                         },
     "Set-Storage":  {
                         "Run":  true,
                         "Wizard":  true
                     },
-    "Restart-Service":  "NlaSvc"
+    "Remove-Temp":  {
+                        "AddFolder":  "None",
+                        "Wizard":  false
+                    },
+    "Restart-Service":  {
+                            "Name":  "NlaSvc",
+                            "Wizard":  false
+                        }
 }

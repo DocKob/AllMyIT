@@ -7,7 +7,6 @@ function Set-Storage {
         [ValidateNotNullOrEmpty()]
         $Run = $true,
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
         $Wizard = $true
     )
 

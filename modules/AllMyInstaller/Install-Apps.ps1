@@ -16,7 +16,6 @@ Function Install-Apps {
         [Parameter(Mandatory = $false)]
         $UnzipArchives = $false,
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
         $Wizard = $false
     )
 

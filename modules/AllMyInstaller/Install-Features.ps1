@@ -7,7 +7,6 @@ function Install-Features {
         [ValidateNotNullOrEmpty()]
         $Features,
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
         $Wizard = $false
     )
 

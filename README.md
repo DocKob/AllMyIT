@@ -61,8 +61,14 @@ Or download the latest release :
 
 ```powershell
     cd C:\Users\[YOUR_USERNAME]\Download
-    Invoke-WebRequest http://hitea.fr/wp-content/uploads/2019/10/AllMyIT.zip -OutFile AllMyIT.zip
-    Expand-Archive -LiteralPath C:\Users\[YOUR_USERNAME]\Download\AllMyIT.zip -DestinationPath C:\Users\[YOUR_USERNAME]\Download\AllMyIT
+
+    Invoke-WebRequest http://hitea.fr/wp-content/uploads/2019/10/AllMyIT.zip -OutFile [ARCHIVE_NAME].zip
+    
+    OR
+
+    Download latest realease: [github.com/DocKob/AllMyIT/releases/latest](https://github.com/DocKob/AllMyIT/releases/latest)
+
+    Expand-Archive -LiteralPath C:\Users\[YOUR_USERNAME]\Download\[ARCHIVE_NAME].zip -DestinationPath C:\Users\[YOUR_USERNAME]\Download\AllMyIT
 ```
 
 Run AllMyIT in Powershell (run as Administrator)

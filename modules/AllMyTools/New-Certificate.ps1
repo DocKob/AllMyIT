@@ -7,13 +7,10 @@ function New-Certificate {
         [ValidateNotNullOrEmpty()]
         $Name,
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
         $Password,
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
         $Export = $false,
         [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
         $Wizard = $false
     )
     if ($Wizard) { 
