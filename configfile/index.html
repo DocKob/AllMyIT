@@ -197,6 +197,8 @@
       
         
       
+        
+      
     </ul>
   </div>
 </nav>
@@ -327,6 +329,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#set-network" class="md-nav__link">
+    Set-Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#install-certificate" class="md-nav__link">
     Install-Certificate
   </a>
@@ -367,6 +376,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../installfile/" title="Install File" class="md-nav__link">
+      Install File
+    </a>
   </li>
 
     
@@ -445,6 +466,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#set-network" class="md-nav__link">
+    Set-Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#install-certificate" class="md-nav__link">
     Install-Certificate
   </a>
@@ -498,9 +526,8 @@
                 
                 <h1 id="config-file">Config File</h1>
 <p>How to build your config file.</p>
-<p>Config files are located in "AllMyIT\config"</p>
 <p>Warning, if you set the password in config file, he's in clear !</p>
-<p>After script run, please delete the config file or restrict "AllMyIT\config" access.</p>
+<p>After script run, please delete the config file or restrict file access.</p>
 <h2 id="naning-the-config-file">Naning the config file</h2>
 <p>Only use Alphanumeric characters for the filename.</p>
 <h2 id="installer-section">Installer section</h2>
@@ -574,6 +601,18 @@
 
 <p>You can execute : Get-WindowsFeature in Powershell and search feature name</p>
 <h2 id="toolbox-section">Toolbox section</h2>
+<h3 id="set-network">Set-Network</h3>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Set-Network&quot;</span><span class="p">:</span>  <span class="err">{</span>
+                    <span class="ss">&quot;IPAddress&quot;</span><span class="p">:</span>  <span class="ss">&quot;192.168.1.100&quot;</span><span class="p">,</span>
+                    <span class="ss">&quot;PrefixLength&quot;</span><span class="p">:</span>  <span class="ss">&quot;24&quot;</span><span class="p">,</span>
+                    <span class="ss">&quot;DefaultGateway&quot;</span><span class="p">:</span>  <span class="ss">&quot;192.168.1.254&quot;</span><span class="p">,</span>
+                    <span class="ss">&quot;Dns&quot;</span><span class="p">:</span>  <span class="ss">&quot;8.8.8.8&quot;</span><span class="p">,</span>
+                    <span class="ss">&quot;Wizard&quot;</span><span class="p">:</span>  <span class="k">false</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>Set the IP address, the application asks you for which card you want to set the IP address</p>
 <h3 id="install-certificate">Install-Certificate</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Certificate&quot;</span><span class="p">:</span> <span class="err">{</span>
 
@@ -663,13 +702,13 @@
           </a>
         
         
-          <a href="../usage/" title="App Usage" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../installfile/" title="Install File" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                App Usage
+                Install File
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
