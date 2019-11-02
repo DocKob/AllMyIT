@@ -1,11 +1,12 @@
 
 # Getting started
 
+AllMyIT is a Powershell Module !
 
-Deploy and configure Windows devices with Powershell
+Mini app to manage Microsoft services
 
 
-![AllMyIT Alpha 1.0.2](https://i2.wp.com/hitea.fr/wp-content/uploads/2019/10/AllMyIT.jpg?fit=609%2C103&ssl=1)
+![AllMyIT Alpha 2.0.0](https://i2.wp.com/hitea.fr/wp-content/uploads/2019/11/AllMyIT_Alpha_2.jpg?fit=695%2C258&ssl=1)
 
 
 ## Read the doc
@@ -57,31 +58,21 @@ Clone the repository :
     Git clone https://github.com/DocKob/AllMyIT.git
 ```
 
-Or download the latest release : 
+Or download the latest release : [github.com/DocKob/AllMyIT/releases/latest](https://github.com/DocKob/AllMyIT/releases/latest)
+
+
+Run Powershell as Administrator :
 
 ```powershell
-    cd C:\Users\[YOUR_USERNAME]\Download
-
-    Invoke-WebRequest http://hitea.fr/wp-content/uploads/2019/10/AllMyIT.zip -OutFile [ARCHIVE_NAME].zip
-    
-    OR
-
-    Download latest realease: [github.com/DocKob/AllMyIT/releases/latest](https://github.com/DocKob/AllMyIT/releases/latest)
-
-    Expand-Archive -LiteralPath C:\Users\[YOUR_USERNAME]\Download\[ARCHIVE_NAME].zip -DestinationPath C:\Users\[YOUR_USERNAME]\Download\AllMyIT
-```
-
-Run AllMyIT in Powershell (run as Administrator)
-
-```powershell
-    cd C:\Users\[YOUR_USERNAME]\Download\AllMyIT
     Set-ExecutionPolicy Bypass -Scope Process -Force
 
-    # If Computer :
-    .\Install-Ami.ps1 -Mode Computer -Verbose
+    Import-Module -FullyQualifiedName [C:\Users\[YOUR_USERNAME]\Download\AllMyIT] -Force -Verbose
+    
+    # Install AllMyIT
+    Install-Ami
 
-    # If Server:
-    .\Install-Ami.ps1 -Mode Server -Verbose
+    # Launch AllMyIT
+    Invoke-Ami
 ```
 
 

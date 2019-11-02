@@ -8,15 +8,11 @@ How to build your config file.
 
   
 
-Config files are located in "AllMyIT\config"
-
-  
-
 Warning, if you set the password in config file, he's in clear !
 
   
 
-After script run, please delete the config file or restrict "AllMyIT\config" access.
+After script run, please delete the config file or restrict file access.
 
   
   
@@ -130,7 +126,25 @@ You can execute : Get-WindowsFeature in Powershell and search feature name
 
 ## Toolbox section
 
+
   
+### Set-Network
+
+
+
+    "Set-Network":  {
+                        "IPAddress":  "192.168.1.100",
+                        "PrefixLength":  "24",
+                        "DefaultGateway":  "192.168.1.254",
+                        "Dns":  "8.8.8.8",
+                        "Wizard":  false
+    }
+
+
+
+Set the IP address, the application asks you for which card you want to set the IP address
+
+
 
 ### Install-Certificate
 

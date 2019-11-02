@@ -1,4 +1,11 @@
 ﻿{
+    "Set-Network":  {
+                        "IPAddress":  "192.168.1.100",
+                        "PrefixLength":  "24",
+                        "DefaultGateway":  "192.168.1.254",
+                        "Dns":  "8.8.8.8",
+                        "Wizard":  false
+                    },
     "Install-Apps":  {
                          "AppsUrl":  [
                                          "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"

@@ -1,0 +1,31 @@
+{
+    "Install-Apps": {
+        "AppsUrl": [
+            "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"
+        ],
+        "Chocolatey": [
+            "7zip",
+            "googlechrome",
+            "jre8",
+            "firefox",
+            "adobereader",
+            "vcredist140",
+            "filezilla",
+            "sumatrapdf",
+            "microsoft-teams",
+            "office365proplus"
+        ],
+        "Lnk": false,
+        "ExecuteExe": false,
+        "UnzipArchives": false,
+        "Wizard": false
+    },
+    "Set-Storage": {
+        "Run": true,
+        "Wizard": true
+    },
+    "Restart-Service": {
+        "Name": "NlaSvc",
+        "Wizard": false
+    }
+}
