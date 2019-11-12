@@ -492,14 +492,25 @@
 
     <span class="nb">Import-Module</span> <span class="n">-FullyQualifiedName</span> <span class="p">[</span><span class="n">C</span><span class="err">:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="no">[YOUR_USERNAME]</span><span class="p">\</span><span class="n">Download</span><span class="p">\</span><span class="n">AllMyIT</span><span class="p">]</span> <span class="n">-Force</span> <span class="n">-Verbose</span>
 
-    <span class="c"># Install AllMyIT</span>
+    <span class="c"># Install AllMyIT in C:\AllMyIT by default</span>
     <span class="nb">Install-Ami</span>
 
-    <span class="c"># Launch AllMyIT</span>
-    <span class="nb">Invoke-Ami</span>
+    <span class="c"># You can install AMI with a json config file</span>
+    <span class="nb">Install-Ami</span> <span class="n">-ProfilePath</span> <span class="s2">&quot;PATH&quot;</span>
+
+    <span class="c"># Config file example : (All value are required)</span>
+    <span class="p">{</span>
+    <span class="s2">&quot;Device-Infos&quot;</span><span class="err">:</span>  <span class="p">{</span>
+                         <span class="s2">&quot;Mode&quot;</span><span class="err">:</span>  <span class="s2">&quot;Computer&quot;</span>
+                     <span class="p">},</span>
+    <span class="s2">&quot;Install-Options&quot;</span><span class="err">:</span>  <span class="p">{</span>
+                            <span class="s2">&quot;RootFolder&quot;</span><span class="err">:</span>  <span class="s2">&quot;C:\\AllMyIT&quot;</span>
+                        <span class="p">}</span>
+    <span class="p">}</span>
 </pre></div>
 
 
+<p>See more about install config file : <a href="https://dockob.github.io/AllMyIT/installfile/">dockob.github.io/AllMyIT/installfile</a></p>
 <p>And read the doc for usage : <a href="https://dockob.github.io/AllMyIT/usage/">dockob.github.io/AllMyIT/usage</a></p>
                 
                   
