@@ -68,12 +68,23 @@ Run Powershell as Administrator :
 
     Import-Module -FullyQualifiedName [C:\Users\[YOUR_USERNAME]\Download\AllMyIT] -Force -Verbose
     
-    # Install AllMyIT
+    # Install AllMyIT in C:\AllMyIT by default
     Install-Ami
 
-    # Launch AllMyIT
-    Invoke-Ami
+    # You can install AMI with a json config file
+    Install-Ami -ProfilePath "PATH"
+
+    # Config file example : (All value are required)
+    {
+    "Device-Infos":  {
+                         "Mode":  "Computer"
+                     },
+    "Install-Options":  {
+                            "RootFolder":  "C:\\AllMyIT"
+                        }
+    }
 ```
 
+See more about install config file : [dockob.github.io/AllMyIT/installfile](https://dockob.github.io/AllMyIT/installfile/)
 
 And read the doc for usage : [dockob.github.io/AllMyIT/usage](https://dockob.github.io/AllMyIT/usage/)

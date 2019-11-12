@@ -45,6 +45,7 @@ function Install-Modules {
     }
 }
 
+# Autorun with config file
 function Install-Features {
     [CmdletBinding(
         SupportsShouldProcess = $true
@@ -80,6 +81,7 @@ function Install-Features {
     }
 }
 
+# Autorun with config file
 Function Install-Apps {
     [CmdletBinding(
         SupportsShouldProcess = $true

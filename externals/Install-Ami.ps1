@@ -5,27 +5,25 @@ function Install-Ami {
     param (        
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        $Profile = "Install"
+        $ProfilePath
     )
 
-    $configuration = Import-Configuration -Profile $Profile
-    if ([bool]($configuration.PSobject.Properties.name -match "Device-Infos")) { 
-        $Mode = $configuration.("Device-Infos").Mode
+    if ($ProfilePath) {
+        $configuration = Import-Configuration -Profile $ProfilePath
+        Confirm-Configuration -Profile "Install" -Configuration $configuration -StrictMode $true
+    }
+    else {
+        $configuration = Import-Template -Profile "Install"
     }
     
-    if ([bool]($configuration.PSobject.Properties.name -match "Install-Options")) { 
-        $InstallPath = $configuration.("Install-Options").RootFolder
-    }
+    $Mode = $configuration.("Device-Infos").Mode
+    $InstallPath = $configuration.("Install-Options").RootFolder
 
     New-Folders -Folders @("export", "temp", "ps-modules") -Path $InstallPath
     Set-RegKey -Key "InstallPath" -Value $InstallPath -Type "String"
     Set-RegKey -Key "Mode" -Value $Mode -Type "String"
-    Install-WinRm -StartService $True
     Install-PackageStore -Name Nuget
     Get-DeviceInfos -Export $true
     Install-Modules -Modules @("PendingReboot", "PSWindowsUpdate")
-    if ($Mode -match "Server") {
-        Enable-PSRemoting -Force
-    }
     Save-Configuration -Configuration $configuration
 }

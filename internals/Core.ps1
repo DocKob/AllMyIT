@@ -47,17 +47,15 @@ function Import-Configuration() {
         [string]$Profile
     )
 
-    $filename = (Join-Path $BaseFolder ("config/" + $profile + ".json"))
-
-    if (Test-Path $filename) {
-        $configuration = (Get-Content $filename | Out-String | ConvertFrom-Json)
+    if (Test-Path $Profile) {
+        $Configuration = (Get-Content $Profile | Out-String | ConvertFrom-Json)
     }
     else {
         Read-Host "Profile error, exit... "
         exit
     }
-    $configuration | Add-Member Filename $filename
-    return $configuration
+    $Configuration | Add-Member Filename $Profile
+    return $Configuration
 }
 
 function Save-Configuration() {
@@ -71,28 +69,67 @@ function Save-Configuration() {
     )
     
     $excluded = @('Filename')
-    $configuration | Select-Object -Property * -ExcludeProperty $excluded | ConvertTo-Json | Set-Content -Encoding UTF8 -Path $configuration.Filename
+    $Configuration | Select-Object -Property * -ExcludeProperty $excluded | ConvertTo-Json | Set-Content -Encoding UTF8 -Path $Configuration.Filename
     Write-Verbose -Message "Config file saved !"
 }
 
-function Set-ConfigMode {
+function Confirm-Configuration() {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
     Param(
+        [Parameter(Mandatory = $True)]
+        [ValidateNotNullOrEmpty()]
+        $Profile,
+        [Parameter(Mandatory = $True)]
+        [ValidateNotNullOrEmpty()]
+        $Configuration,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        $IsEnabled = $false
+        $StrictMode
+        
     )
 
-    if ($IsEnabled -eq $true) {
-        netsh advfirewall set allprofiles state off
-        Enable-WSManCredSSP -Role server
+    $Template = Import-Template -Profile $Profile
+
+    foreach ($TemplateItem in $Template.PSobject.Properties) {
+        if ([bool]($configuration.PSobject.Properties.name -match $TemplateItem.Name)) { 
+            Write-Verbose -Message ($TemplateItem.Name + " is set in custom config file")
+            $args = $configuration.($TemplateItem.Name)
+            $TemplateItem.Value
+        }
+        elseif ($StrictMode -eq $true) {
+            Write-Verbose -Message ($TemplateItem.Name + " is no set in custom config file !")
+            Read-Host "Error in config file exiting..."
+            exit
+        }
+        else {
+            Write-Verbose -Message ($TemplateItem.Name + " is no set in custom config file !")
+        }
+    }
+}
+
+function Import-Template() {
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
+    Param(
+        [Parameter(Mandatory = $True)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Profile
+    )
+
+    $filename = (Join-Path $BaseFolder ("config/" + $Profile + ".json"))
+
+    if (Test-Path $filename) {
+        $Template = (Get-Content $filename | Out-String | ConvertFrom-Json)
     }
     else {
-        netsh advfirewall set allprofiles state on
-        Disable-WSManCredSSP -Role Server
+        Read-Host "Profile error, exit... "
+        exit
     }
+    $Template | Add-Member Filename $filename
+    return $Template
 }
 
 function Test-Command {

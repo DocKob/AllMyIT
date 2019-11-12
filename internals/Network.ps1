@@ -7,6 +7,7 @@ function Test-DNS {
     $Socket.close()
 }
 
+# Autorun with config file
 function Set-Network {
     Param(
         [Parameter(Mandatory = $false)]

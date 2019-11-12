@@ -1,3 +1,4 @@
+# Autorun with config file
 function New-Certificate {
     [CmdletBinding(
         SupportsShouldProcess = $true
@@ -43,6 +44,7 @@ function New-Certificate {
     }
 }
 
+# Autorun with config file
 function New-LocalAdmin {
     [CmdletBinding()]
     param (
@@ -51,7 +53,7 @@ function New-LocalAdmin {
         [Parameter(Mandatory = $false)]
         $Password,
         [Parameter(Mandatory = $false)]
-        $Wizard = $true
+        $Wizard = $false
     )
     if ($Wizard) { 
         [string]$NewLocalAdmin = Read-Host "Set a name for the new admin"
@@ -63,7 +65,7 @@ function New-LocalAdmin {
     }
     else {
         New-LocalUser -Name $NewLocalAdmin -Password (ConvertTo-SecureString -AsPlainText $Password -Force) -FullName $NewLocalAdmin -Description "Created by AllMyIT"
-        Write-Verbose -Message "$NewLocalAdmin local user crated"
+        Write-Verbose -Message "$NewLocalAdmin local user created"
     }
     if (!(Test-GroupMember -User $NewLocalAdmin)) {
         Add-LocalGroupMember -Group "Administrateurs" -Member $NewLocalAdmin
@@ -74,6 +76,7 @@ function New-LocalAdmin {
     }
 }
 
+# Autorun with config file
 function Restart-Service {
     Param(
         [Parameter(Mandatory = $false)]
@@ -142,6 +145,70 @@ function Restart-Service {
     Write-Host "-------------------------------------------"
     Write-Host "Restart of services completed"
     Write-Host "-------------------------------------------"   
+}
+
+# Autorun with config file
+function Set-ConfigMode {
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
+    Param(
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        $IsEnabled = $false,
+        [Parameter(Mandatory = $false)]
+        $Wizard = $false
+    )
+
+    if ($Wizard -eq $true) {
+        $EnableConfig = Read-Host "Do you want enable config mode ? (Y)es or no dy default"
+        if ($EnableConfig -match "Y") {
+            $IsEnabled = $true
+        }
+        else {
+            $IsEnabled = $false
+        }
+    }
+
+    if ($IsEnabled -eq $true) {
+        netsh advfirewall set allprofiles state off
+        Enable-WSManCredSSP -Role server
+    }
+    elseif ($IsEnabled -eq $false) {
+        netsh advfirewall set allprofiles state on
+        Disable-WSManCredSSP -Role Server
+    }
+}
+
+# Autorun with config file
+function Set-Accessibility {
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
+    Param(
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        $IsEnabled = $false,
+        [Parameter(Mandatory = $false)]
+        $Wizard = $false
+    )
+
+    if ($Wizard -eq $true) {
+        $EnableConfig = Read-Host "Do you want enable PSRemoting, WinRM and Secure RDP mode ? (Y)es or no dy default"
+        if ($EnableConfig -match "Y") {
+            $IsEnabled = $true
+        }
+        else {
+            $IsEnabled = $false
+        }
+    }
+
+    if ($IsEnabled -eq $true) {
+        Enable-PSRemoting -Force
+        Install-WinRm -StartService $True
+    }
+    elseif ($IsEnabled -eq $false) {
+    }  
 }
 
 function Test-GroupMember {

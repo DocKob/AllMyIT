@@ -1,7 +1,15 @@
 # App Usage
 
-Run AllMyIT with your profile or use Default for demo.
+Invoke AllMyIT module in Wizard mode
 
 ```powershell
-    Invoke-Ami -Profile "Default" -Verbose
+    Invoke-Ami
+```
+
+Run AllMyIT module in ConfigFile mode
+
+See more about config file : [dockob.github.io/AllMyIT/configfile](https://dockob.github.io/AllMyIT/configfile/)
+
+```powershell
+    Start-Ami -ProfilePath "PATH"
 ```

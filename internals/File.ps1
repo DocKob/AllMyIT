@@ -22,6 +22,7 @@ Function New-Folders {
     } 
 }
 
+# Autorun with config file
 function Set-Storage {
     [CmdletBinding(
         SupportsShouldProcess = $true
@@ -77,7 +78,7 @@ function Set-Storage {
     }
 }
 
-
+# Autorun with config file
 function Remove-Temp {
     [CmdletBinding()]
     Param(
