@@ -321,8 +321,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#toolbox-section" class="md-nav__link">
-    Toolbox section
+  <a href="#network-section" class="md-nav__link">
+    Network section
   </a>
   
     <nav class="md-nav">
@@ -335,12 +335,18 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#install-certificate" class="md-nav__link">
-    Install-Certificate
-  </a>
+      </ul>
+    </nav>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#file-section" class="md-nav__link">
+    File section
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#set-storage" class="md-nav__link">
@@ -356,9 +362,50 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-section" class="md-nav__link">
+    Device section
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-certificate" class="md-nav__link">
+    Install-Certificate
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#restart-service" class="md-nav__link">
     Restart-Service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-localadmin" class="md-nav__link">
+    New-LocalAdmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-configmode" class="md-nav__link">
+    Set-ConfigMode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-accessibility" class="md-nav__link">
+    Set-Accessibility
   </a>
   
 </li>
@@ -458,8 +505,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#toolbox-section" class="md-nav__link">
-    Toolbox section
+  <a href="#network-section" class="md-nav__link">
+    Network section
   </a>
   
     <nav class="md-nav">
@@ -472,12 +519,18 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#install-certificate" class="md-nav__link">
-    Install-Certificate
-  </a>
+      </ul>
+    </nav>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#file-section" class="md-nav__link">
+    File section
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#set-storage" class="md-nav__link">
@@ -493,9 +546,50 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-section" class="md-nav__link">
+    Device section
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-certificate" class="md-nav__link">
+    Install-Certificate
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#restart-service" class="md-nav__link">
     Restart-Service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-localadmin" class="md-nav__link">
+    New-LocalAdmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-configmode" class="md-nav__link">
+    Set-ConfigMode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-accessibility" class="md-nav__link">
+    Set-Accessibility
   </a>
   
 </li>
@@ -600,7 +694,7 @@
 
 
 <p>You can execute : Get-WindowsFeature in Powershell and search feature name</p>
-<h2 id="toolbox-section">Toolbox section</h2>
+<h2 id="network-section">Network section</h2>
 <h3 id="set-network">Set-Network</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Set-Network&quot;</span><span class="p">:</span>  <span class="err">{</span>
                     <span class="ss">&quot;IPAddress&quot;</span><span class="p">:</span>  <span class="ss">&quot;192.168.1.100&quot;</span><span class="p">,</span>
@@ -613,23 +707,7 @@
 
 
 <p>Set the IP address, the application asks you for which card you want to set the IP address</p>
-<h3 id="install-certificate">Install-Certificate</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Certificate&quot;</span><span class="p">:</span> <span class="err">{</span>
-
-<span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;AllMyIT&quot;</span><span class="p">,</span>
-
-<span class="ss">&quot;Export&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
-
-<span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span><span class="p">,</span>
-
-<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
-
-<span class="err">}</span>
-</pre></div>
-
-
-<p>Create a certificat for password encryption.</p>
-<p>Set the Name and the password. If export is true, the certificate is exported to "AllMyIT\export"</p>
+<h2 id="file-section">File section</h2>
 <h3 id="set-storage">Set-Storage</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Set-Storage&quot;</span><span class="p">:</span> <span class="err">{</span>
 
@@ -654,7 +732,25 @@
 
 
 <p>Perform a disk cleanup and temp folders cleanup</p>
-<p>Set "Custom" to "Lenovo" for add the lenovo specifics folders</p>
+<p>Set "AddFolder" to "Lenovo" for add the lenovo specifics folders</p>
+<h2 id="device-section">Device section</h2>
+<h3 id="install-certificate">Install-Certificate</h3>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Certificate&quot;</span><span class="p">:</span> <span class="err">{</span>
+
+<span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;AllMyIT&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Export&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
+
+<span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span><span class="p">,</span>
+
+<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="err">}</span>
+</pre></div>
+
+
+<p>Create a certificat for password encryption.</p>
+<p>Set the Name and the password. If export is true, the certificate is exported to "Install_Path\export"</p>
 <h3 id="restart-service">Restart-Service</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Restart-Service&quot;</span><span class="p">:</span> <span class="err">{</span>
 
@@ -666,7 +762,39 @@
 </pre></div>
 
 
-<p>Set services name for restart (dependancies restart auto)</p>
+<p>Set services name for restart (dependancies auto restart)</p>
+<h3 id="new-localadmin">New-LocalAdmin</h3>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;New-LocalAdmin&quot;</span><span class="p">:</span> <span class="err">{</span>
+
+    <span class="ss">&quot;NewLocalAdmin&quot;</span><span class="p">:</span> <span class="ss">&quot;Name&quot;</span><span class="p">,</span>
+
+    <span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span>
+
+<span class="err">}</span>
+</pre></div>
+
+
+<p>Create a new local admin, if the user name already exist the password is reset with defined</p>
+<h3 id="set-configmode">Set-ConfigMode</h3>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Set-ConfigMode&quot;</span><span class="p">:</span> <span class="err">{</span>
+
+    <span class="ss">&quot;IsEnabled&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="err">}</span>
+</pre></div>
+
+
+<p>Disable all firewall rules and sets WSManCredSSP to server role if set to true</p>
+<h3 id="set-accessibility">Set-Accessibility</h3>
+<div class="codehilite"><pre><span></span><span class="ss">&quot;Set-Accessibility&quot;</span><span class="p">:</span> <span class="err">{</span>
+
+    <span class="ss">&quot;IsEnabled&quot;</span><span class="p">:</span> <span class="k">false</span>
+
+<span class="err">}</span>
+</pre></div>
+
+
+<p>Enable PSRemoting, WinRM and Secure RDP mode if is set to true</p>
                 
                   
                 
