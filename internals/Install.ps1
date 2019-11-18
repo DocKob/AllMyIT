@@ -51,16 +51,10 @@ function Install-Features {
         SupportsShouldProcess = $true
     )]
     param(
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $Features,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [hashtable]$Features
     )
-
-    if ($Wizard -eq $true) {
-        $Features = Read-Host "which server feature do you want to install ?"
-    }
 
     if (! (Test-Command -Command "Install-WindowsFeature")) {
         Write-Verbose -Message "Device is not a server ! Exit"
@@ -87,33 +81,23 @@ Function Install-Apps {
         SupportsShouldProcess = $true
     )]
     param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [ValidateSet("Ninite", "Chocolatey", "Url")]
+        [string]$Installer,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [hashtable]$Apps,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        $Installer,
+        [bool]$Lnk = $false,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        $Apps,
+        [bool]$ExecuteExe = $false,
         [Parameter(Mandatory = $false)]
-        $Lnk = $false,
-        [Parameter(Mandatory = $false)]
-        $ExecuteExe = $false,
-        [Parameter(Mandatory = $false)]
-        $UnzipArchives = $false,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [ValidateNotNullOrEmpty()]
+        [bool]$UnzipArchives = $false
     )
-
-    if ($Wizard -eq $true) {
-        Switch (Read-Host "which store do you want to use ? (1)Chocolatey (2)Url") {
-            "1" {
-                $Installer = "Chocolatey"
-            }
-            "2" {
-                $Installer = "Url"
-            }
-        }
-        $Apps = Read-Host "which application do you want to install ?"
-    }
 
     Switch ($Installer) {
         "Ninite" {

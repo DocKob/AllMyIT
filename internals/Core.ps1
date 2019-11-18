@@ -92,21 +92,25 @@ function Confirm-Configuration() {
 
     $Template = Import-Template -Profile $Profile
 
-    foreach ($TemplateItem in $Template.PSobject.Properties) {
-        if ([bool]($configuration.PSobject.Properties.name -match $TemplateItem.Name)) { 
-            Write-Verbose -Message ($TemplateItem.Name + " is set in custom config file")
-            $args = $configuration.($TemplateItem.Name)
-            $TemplateItem.Value
-        }
-        elseif ($StrictMode -eq $true) {
-            Write-Verbose -Message ($TemplateItem.Name + " is no set in custom config file !")
-            Read-Host "Error in config file exiting..."
-            exit
+    foreach ($ConfigItem in $Configuration.PSobject.Properties) {
+        if ([bool]($Template.PSobject.Properties.name -match $ConfigItem.Name)) { 
+            Write-Verbose -Message ($ConfigItem.Name + " is set in template")
         }
         else {
-            Write-Verbose -Message ($TemplateItem.Name + " is no set in custom config file !")
+            Write-Verbose -Message ($ConfigItem.Name + " is no set in template, removing it !")
+            $Configuration.PSObject.Properties.Remove($ConfigItem.Name)
         }
     }
+
+    foreach ($TemplateItem in $Template.PSobject.Properties) {
+        if (!([bool]($Configuration.PSobject.Properties.name -match $TemplateItem.Name)) -and ($StrictMode -eq $true)) {
+            Write-Verbose -Message ($ConfigItem.Name + " is no set in config file ! it's a required field, exiting...")
+            Read-Host "Press Enter !"
+            exit
+        }
+    }
+
+    return $Configuration
 }
 
 function Import-Template() {

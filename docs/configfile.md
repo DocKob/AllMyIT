@@ -120,11 +120,10 @@ Only use Alphanumeric characters for the filename.
   
 
 You can execute : Get-WindowsFeature in Powershell and search feature name
-
   
   
 
-## Toolbox section
+## Network section
 
 
   
@@ -146,29 +145,7 @@ Set the IP address, the application asks you for which card you want to set the 
 
 
 
-### Install-Certificate
-
-  
-
-    "Install-Certificate": {
-    
-    "Name": "AllMyIT",
-    
-    "Export": true,
-    
-    "Password": "Password",
-    
-    "Wizard": false
-    
-    }
-
-  
-
-Create a certificat for password encryption.
-
-  
-
-Set the Name and the password. If export is true, the certificate is exported to "AllMyIT\export"
+## File section
 
   
 
@@ -208,7 +185,37 @@ Perform a disk cleanup and temp folders cleanup
 
   
 
-Set "Custom" to "Lenovo" for add the lenovo specifics folders
+Set "AddFolder" to "Lenovo" for add the lenovo specifics folders
+
+
+
+## Device section
+
+
+
+### Install-Certificate
+
+  
+
+    "Install-Certificate": {
+    
+    "Name": "AllMyIT",
+    
+    "Export": true,
+    
+    "Password": "Password",
+    
+    "Wizard": false
+    
+    }
+
+  
+
+Create a certificat for password encryption.
+
+  
+
+Set the Name and the password. If export is true, the certificate is exported to "Install_Path\export"
 
   
 
@@ -226,4 +233,54 @@ Set "Custom" to "Lenovo" for add the lenovo specifics folders
 
   
 
-Set services name for restart (dependancies restart auto)
+Set services name for restart (dependancies auto restart)
+
+
+
+### New-LocalAdmin
+
+
+
+    "New-LocalAdmin": {
+
+        "NewLocalAdmin": "Name",
+
+        "Password": "Password"
+
+    }
+
+
+
+Create a new local admin, if the user name already exist the password is reset with defined
+
+
+
+### Set-ConfigMode
+
+
+
+    "Set-ConfigMode": {
+
+        "IsEnabled": false
+
+    }
+
+
+
+Disable all firewall rules and sets WSManCredSSP to server role if set to true
+
+
+
+### Set-Accessibility
+
+
+
+    "Set-Accessibility": {
+
+        "IsEnabled": false
+        
+    }
+
+
+
+Enable PSRemoting, WinRM and Secure RDP mode if is set to true

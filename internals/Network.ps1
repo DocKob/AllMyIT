@@ -10,20 +10,18 @@ function Test-DNS {
 # Autorun with config file
 function Set-Network {
     Param(
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $IPAddress,
-        [Parameter(Mandatory = $false)]
+        [string]$IPAddress,
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $PrefixLength,
-        [Parameter(Mandatory = $false)]
+        [string]$PrefixLength,
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $DefaultGateway,
-        [Parameter(Mandatory = $false)]
+        [string]$DefaultGateway,
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $Dns,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $true
+        [hashtable]$Dns
     )
 
     $NetworkCards = Get-NetAdapter | Where-Object "MediaConnectionState" -Match "Connected" | Select-Object *
@@ -34,12 +32,7 @@ function Set-Network {
     if (!($InterfaceIndex = Read-Host "which card do you want to set ? (Card Index or press enter to return)")) {
         return
     }
-    if ($Wizard -eq $true) {
-        $IPAddress = Read-Host "which IP do you want to set ?"
-        $PrefixLength = Read-Host "which Mask Length do you want to set ? (Ex: 24)"
-        $DefaultGateway = Read-Host "which Gateway do you want to set ?"
-        $Dns = Read-Host "which Dns do you want to set ? (separatated with comma)"
-    }
+
     if (!($IPAddress) -or !($PrefixLength) -or !($DefaultGateway) -or !($Dns)) {
         return
     }

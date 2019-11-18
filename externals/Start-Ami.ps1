@@ -8,9 +8,7 @@ function Start-Ami {
         $ProfilePath
     )
 
-    $configuration = Import-Configuration -Profile $ProfilePath
-
-    Confirm-Configuration -Profile "Config" -Configuration $configuration
+    $configuration = Confirm-Configuration -Profile "Config" -Configuration (Import-Configuration -Profile $ProfilePath)
 
     if ([bool]($configuration.PSobject.Properties.name -match "New-LocalAdmin")) {
         New-LocalAdmin -NewLocalAdmin $configuration.("New-LocalAdmin").NewLocalAdmin -Password $configuration.("New-LocalAdmin").Password

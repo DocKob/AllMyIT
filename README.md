@@ -74,15 +74,28 @@ Run Powershell as Administrator :
     # You can install AMI with a json config file
     Install-Ami -ProfilePath "PATH"
 
-    # Config file example : (All value are required)
-    {
-    "Device-Infos":  {
-                         "Mode":  "Computer"
-                     },
-    "Install-Options":  {
-                            "RootFolder":  "C:\\AllMyIT"
-                        }
-    }
+    See Install File in left menu !
 ```
+
+
+
+During the installation process AllMyIT exports a device information file (this one is in CSV format and is located in "Install_Path\Export")
+
+
+
+Powershell modules are also installed by default: (the list can be evolved) :
+
+
+
+- PSWindowsUpdate
+- PendingReboot
+
+
+
+Finally, a registry key is created in: "HKLM:\SOFTWARE\AllMyIT"
+
+It stores important parameters such as device type or installation path
+
+
 
 And read the doc for usage : [dockob.github.io/AllMyIT/usage](https://dockob.github.io/AllMyIT/usage/)

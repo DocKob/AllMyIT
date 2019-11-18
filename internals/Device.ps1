@@ -4,26 +4,17 @@ function New-Certificate {
         SupportsShouldProcess = $true
     )]
     param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Password,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        $Name,
-        [Parameter(Mandatory = $false)]
-        $Password,
-        [Parameter(Mandatory = $false)]
-        $Export = $false,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [bool]$Export = $false
     )
-    if ($Wizard) { 
-        [string]$Name = Read-Host "Set a name for the certificate"
-        switch (Read-Host "do you want to export the certificate ? (Y)es to export or press enter to cancel") {
-            "Y" { 
-                $Export = $true
-                $Password = Read-Host "Set a password for the export"
-            }
-            Default { $Export = $false }
-        }
-    }
+
     $OldCert = Get-ChildItem -Path cert:\CurrentUser\My | Where-Object { $_.FriendlyName -eq $Name }
     if ($OldCert) {
         Write-Host "Cert Alreday Exist, Return "
@@ -48,17 +39,14 @@ function New-Certificate {
 function New-LocalAdmin {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $false)]
-        $NewLocalAdmin,
-        [Parameter(Mandatory = $false)]
-        $Password,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$NewLocalAdmin,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Password
     )
-    if ($Wizard) { 
-        [string]$NewLocalAdmin = Read-Host "Set a name for the new admin"
-        $Password = Read-Host "Set a password for " $NewLocalAdmin
-    }
+
     if (Get-LocalUser -Name $NewLocalAdmin) {
         Write-Verbose -Message "User already exist, reseting the password..."
         Get-LocalUser -Name $NewLocalAdmin | Set-LocalUser -Password (ConvertTo-SecureString -AsPlainText $Password -Force)
@@ -79,16 +67,10 @@ function New-LocalAdmin {
 # Autorun with config file
 function Restart-Service {
     Param(
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [String]$ServiceName,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [String]$ServiceName
     )
-
-    if ($Wizard -eq $true) {
-        $ServiceName = Read-Host "which service do you want to restart ?"
-    }
 
     [System.Collections.ArrayList]$ServicesToRestart = @()
 
@@ -153,22 +135,10 @@ function Set-ConfigMode {
         SupportsShouldProcess = $true
     )]
     Param(
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $IsEnabled = $false,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [bool]$IsEnabled
     )
-
-    if ($Wizard -eq $true) {
-        $EnableConfig = Read-Host "Do you want enable config mode ? (Y)es or no dy default"
-        if ($EnableConfig -match "Y") {
-            $IsEnabled = $true
-        }
-        else {
-            $IsEnabled = $false
-        }
-    }
 
     if ($IsEnabled -eq $true) {
         netsh advfirewall set allprofiles state off
@@ -186,22 +156,10 @@ function Set-Accessibility {
         SupportsShouldProcess = $true
     )]
     Param(
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $IsEnabled = $false,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [bool]$IsEnabled
     )
-
-    if ($Wizard -eq $true) {
-        $EnableConfig = Read-Host "Do you want enable PSRemoting, WinRM and Secure RDP mode ? (Y)es or no dy default"
-        if ($EnableConfig -match "Y") {
-            $IsEnabled = $true
-        }
-        else {
-            $IsEnabled = $false
-        }
-    }
 
     if ($IsEnabled -eq $true) {
         Enable-PSRemoting -Force

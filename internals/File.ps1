@@ -28,11 +28,9 @@ function Set-Storage {
         SupportsShouldProcess = $true
     )]
     param(
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        $Run = $true,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $true
+        $Run
     )
 
     $AvailableDisks = Get-Disk | Where-Object PartitionStyle -eq "RAW"
@@ -40,36 +38,31 @@ function Set-Storage {
     if ($AvailableDisks) {
         Write-Host @($AvailableDisks).Count "disk is not configured"
         foreach ($Disk in $AvailableDisks) {
-            if ($Wizard) {
-                switch (Read-Host "Do you want configure disk: $($Disk.FriendlyName) (Number: $($Disk.Number)) (Y)es or press enter to cancel") {
-                    "Y" {
-                        Initialize-Disk $Disk.Number
-                        Write-Verbose -Message ("Disk " + $Disk.Number + " initialized")
-                        switch (Read-Host "use maximum size and auto assign letter ? (Y)es or press enter to set") {
-                            "Y" {
-                                $Partition = New-Partition -DiskNumber $Disk.Number -UseMaximumSize -AssignDriveLetter
-                                Format-Volume -DriveLetter $Partition.DriveLetter
-                                Write-Verbose -Message ("New volume created with letter: " + $Partition.DriveLetter)
-                            }
-                            Default {
-                                $DriveSize = Read-Host "Set partition size"
-                                [string]$DriveLetter = Read-Host "Set partition letter"
-                                if ($DriveSize -and $DriveLetter) { 
-                                    $Partition = New-Partition -DiskNumber $Disk.Number -Size $DriveSize -DriveLetter $DriveLetter
-                                    Format-Volume -DriveLetter $Partition.DriveLetter
-                                }
-                            }
+            switch (Read-Host "Do you want configure disk: $($Disk.FriendlyName) (Number: $($Disk.Number)) (Y)es or press enter to cancel") {
+                "Y" {
+                    Initialize-Disk $Disk.Number
+                    Write-Verbose -Message ("Disk " + $Disk.Number + " initialized")
+                    switch (Read-Host "use maximum size and auto assign letter ? (Y)es or press enter to set") {
+                        "Y" {
+                            $Partition = New-Partition -DiskNumber $Disk.Number -UseMaximumSize -AssignDriveLetter
+                            Format-Volume -DriveLetter $Partition.DriveLetter
+                            Write-Verbose -Message ("New volume created with letter: " + $Partition.DriveLetter)
                         }
-                        [string]$DriveLabel = Read-Host ("Type a label for the volume " + $Partition.DriveLetter + ":")
-                        if ($DriveLabel) {
-                            Set-Volume -DriveLetter $Partition.DriveLetter -NewFileSystemLabel $DriveLabel
+                        Default {
+                            $DriveSize = Read-Host "Set partition size"
+                            [string]$DriveLetter = Read-Host "Set partition letter"
+                            if ($DriveSize -and $DriveLetter) { 
+                                $Partition = New-Partition -DiskNumber $Disk.Number -Size $DriveSize -DriveLetter $DriveLetter
+                                Format-Volume -DriveLetter $Partition.DriveLetter
+                            }
                         }
                     }
-                    Default { Write-Verbose -Message ("Disk " + $Disk.Number + " not configured") }
+                    [string]$DriveLabel = Read-Host ("Type a label for the volume " + $Partition.DriveLetter + ":")
+                    if ($DriveLabel) {
+                        Set-Volume -DriveLetter $Partition.DriveLetter -NewFileSystemLabel $DriveLabel
+                    }
                 }
-            }
-            else {
-                Write-Verbose -Message "This function run only with Wizard set to true currently !"
+                Default { Write-Verbose -Message ("Disk " + $Disk.Number + " not configured") }
             }
         } 
     }
@@ -82,20 +75,10 @@ function Set-Storage {
 function Remove-Temp {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $False)]
-        $AddFolder = $false,
-        [Parameter(Mandatory = $false)]
-        $Wizard = $false
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$AddFolder
     )
-
-    if ($Wizard -eq $true) {
-        switch (Read-Host "Add custom folders ? (1)Lenovo") {
-            "1" {
-                $AddFolder = "Lenovo"
-            }
-            default { }
-        }
-    }
     
     $objShell = New-Object -ComObject Shell.Application
     

@@ -4,7 +4,7 @@ function Invoke-Ami {
     )]
     param ()
 
-    $SelectedProfile = " Run AllMyIT Wizard"
+    $MenuTitle = " Run AllMyIT Wizard"
     $WizardMenu = @"
 
 1: New Local Admin
@@ -32,36 +32,36 @@ Q: Press Q to exist
 "@
 
     Do {
-        Switch (Invoke-Menu -menu $WizardMenu -title $SelectedProfile) {
+        Switch (Invoke-Menu -menu $WizardMenu -title $MenuTitle) {
             "1" {
-                New-LocalAdmin -Wizard $true
+                New-LocalAdmin
             }
             "2" {
-                Set-Network -Wizard $true
+                Set-Network
             }
             "3" {
-                New-Certificate -Wizard $true
+                New-Certificate
             }
             "4" {
-                Set-Storage -Wizard $true
+                Set-Storage
             }
             "5" {
-                Install-Apps -Wizard $true
+                Install-Apps
             }
             "6" {
-                Install-Features -Wizard $true
+                Install-Features
             }
             "7" {
-                Remove-Temp -Wizard $true
+                Remove-Temp
             }
             "8" {
-                Restart-Service -Wizard $true
+                Restart-Service
             }
             "9" {
-                Set-ConfigMode -Wizard $true
+                Set-ConfigMode
             }
             "10" {
-                Set-Accessibility -Wizard $true
+                Set-Accessibility
             }
             "Q" {
                 Read-Host "Closing..., press enter"
