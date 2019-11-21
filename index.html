@@ -322,6 +322,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#from-powershell-gallery" class="md-nav__link">
+    From PowerShell Gallery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-source" class="md-nav__link">
+    From Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
       
       
       
@@ -437,6 +458,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#from-powershell-gallery" class="md-nav__link">
+    From PowerShell Gallery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-source" class="md-nav__link">
+    From Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
       
       
       
@@ -457,12 +499,10 @@
                 
                 
                 <h1 id="getting-started">Getting started</h1>
-<p>AllMyIT is a Powershell Module !</p>
-<p>Mini app to manage Microsoft services</p>
-<p><img alt="AllMyIT Alpha 2.0.0" src="https://i2.wp.com/hitea.fr/wp-content/uploads/2019/11/AllMyIT_Alpha_2.jpg?fit=695%2C258&amp;ssl=1" /></p>
+<p>AllMyIT is a Powershell Module. Made to manage Microsoft services, cloud and on premise !</p>
+<p><img alt="AllMyIT Alpha 3.1.1" src="https://i2.wp.com/hitea.fr/wp-content/uploads/2019/11/AllMyIT_Alpha_2.jpg?fit=695%2C258&amp;ssl=1" /></p>
 <h2 id="read-the-doc">Read the doc</h2>
-<p>The documentation is build for latest release, not for the repository branchs</p>
-<p><a href="https://dockob.github.io/AllMyIT">dockob.github.io/AllMyIT</a></p>
+<p>The documentation is build master branch. <a href="https://dockob.github.io/AllMyIT">dockob.github.io/AllMyIT</a></p>
 <h2 id="download">Download</h2>
 <p>Download latest realease: <a href="https://github.com/DocKob/AllMyIT/releases/latest">github.com/DocKob/AllMyIT/releases/latest</a></p>
 <p>View on GitHub: <a href="https://github.com/DocKob/AllMyIT">github.com/DocKob/AllMyIT</a></p>
@@ -481,6 +521,12 @@
 <li>Windows 10 / Windows Server 2016 / Windows Server 2019</li>
 </ul>
 <h2 id="installation">Installation</h2>
+<h2 id="from-powershell-gallery">From PowerShell Gallery</h2>
+<div class="codehilite"><pre><span></span>    <span class="n">Soon</span>
+</pre></div>
+
+
+<h2 id="from-source">From Source</h2>
 <p>Clone the repository :</p>
 <div class="codehilite"><pre><span></span>    <span class="n">Git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">DocKob</span><span class="o">/</span><span class="n">AllMyIT</span><span class="p">.</span><span class="n">git</span>
 </pre></div>
@@ -491,26 +537,31 @@
 <div class="codehilite"><pre><span></span>    <span class="nb">Set-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">-Force</span>
 
     <span class="nb">Import-Module</span> <span class="n">-FullyQualifiedName</span> <span class="p">[</span><span class="n">C</span><span class="err">:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="no">[YOUR_USERNAME]</span><span class="p">\</span><span class="n">Download</span><span class="p">\</span><span class="n">AllMyIT</span><span class="p">]</span> <span class="n">-Force</span> <span class="n">-Verbose</span>
+</pre></div>
 
-    <span class="c"># Install AllMyIT in C:\AllMyIT by default</span>
+
+<h2 id="usage">Usage</h2>
+<div class="codehilite"><pre><span></span>    <span class="c"># Install AllMyIT in C:\AllMyIT by default</span>
     <span class="nb">Install-Ami</span>
 
     <span class="c"># You can install AMI with a json config file</span>
     <span class="nb">Install-Ami</span> <span class="n">-ProfilePath</span> <span class="s2">&quot;PATH&quot;</span>
-
-    <span class="n">See</span> <span class="n">Install</span> <span class="n">File</span> <span class="k">in</span> <span class="n">left</span> <span class="n">menu</span> <span class="p">!</span>
 </pre></div>
 
 
-<p>During the installation process AllMyIT exports a device information file (this one is in CSV format and is located in "Install_Path\Export")</p>
-<p>Powershell modules are also installed by default: (the list can be evolved) :</p>
-<ul>
-<li>PSWindowsUpdate</li>
-<li>PendingReboot</li>
-</ul>
-<p>Finally, a registry key is created in: "HKLM:\SOFTWARE\AllMyIT"</p>
-<p>It stores important parameters such as device type or installation path</p>
-<p>And read the doc for usage : <a href="https://dockob.github.io/AllMyIT/usage/">dockob.github.io/AllMyIT/usage</a></p>
+<p>See more about install file : <a href="https://dockob.github.io/AllMyIT/installfile/">dockob.github.io/AllMyIT/installfile</a></p>
+<div class="codehilite"><pre><span></span>    <span class="c"># Invoke AllMyIT module in Wizard mode</span>
+    <span class="nb">Invoke-Ami</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>    <span class="c"># Run AllMyIT module in ConfigFile mode</span>
+    <span class="nb">Start-Ami</span> <span class="n">-ProfilePath</span> <span class="s2">&quot;PATH&quot;</span>
+</pre></div>
+
+
+<p>See more about config file : <a href="https://dockob.github.io/AllMyIT/configfile/">dockob.github.io/AllMyIT/configfile</a></p>
+<p>And see more about app usage : <a href="https://dockob.github.io/AllMyIT/usage/">dockob.github.io/AllMyIT/usage</a></p>
                 
                   
                 

@@ -299,8 +299,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#naning-the-install-file" class="md-nav__link">
-    Naning the install file
+  <a href="#naning-the-config-file" class="md-nav__link">
+    Naning the config file
   </a>
   
     <nav class="md-nav">
@@ -322,6 +322,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-process" class="md-nav__link">
+    Install process
+  </a>
   
 </li>
       
@@ -369,8 +376,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#naning-the-install-file" class="md-nav__link">
-    Naning the install file
+  <a href="#naning-the-config-file" class="md-nav__link">
+    Naning the config file
   </a>
   
     <nav class="md-nav">
@@ -395,6 +402,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#install-process" class="md-nav__link">
+    Install process
+  </a>
+  
+</li>
+      
       
       
       
@@ -415,10 +429,9 @@
                 
                 
                 <h1 id="install-file">Install File</h1>
-<p>How to build your install file.</p>
 <p>Warning, if you set the password in config file, he's in clear !</p>
 <p>After script run, please delete the config file or restrict file access.</p>
-<h2 id="naning-the-install-file">Naning the install file</h2>
+<h2 id="naning-the-config-file">Naning the config file</h2>
 <p>Only use Alphanumeric characters for the filename.</p>
 <h3 id="device-infos">Device-Infos</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;Device-Infos&quot;</span><span class="p">:</span>  <span class="err">{</span>
@@ -436,6 +449,16 @@
 
 
 <p>RootFolder: Set custom install folder</p>
+<h2 id="install-process">Install process</h2>
+<p>During the installation process AllMyIT exports a device information file (this one is in CSV format and is located in "Install_Path\Export")</p>
+<p>Powershell modules are also installed by default: (the list can be evolved) :</p>
+<ul>
+<li>PSWindowsUpdate</li>
+<li>PendingReboot</li>
+</ul>
+<p>Finally, a registry key is created in: "HKLM:\SOFTWARE\AllMyIT"</p>
+<p>It stores important parameters such as device type or installation path</p>
+<p>And read the doc for usage : <a href="https://dockob.github.io/AllMyIT/usage/">dockob.github.io/AllMyIT/usage</a></p>
                 
                   
                 
