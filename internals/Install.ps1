@@ -53,7 +53,7 @@ function Install-Features {
     param(
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [hashtable]$Features
+        [array]$Features
     )
 
     if (! (Test-Command -Command "Install-WindowsFeature")) {
@@ -87,7 +87,7 @@ Function Install-Apps {
         [string]$Installer,
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [hashtable]$Apps,
+        [array]$Apps,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [bool]$Lnk = $false,

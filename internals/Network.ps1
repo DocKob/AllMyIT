@@ -21,7 +21,7 @@ function Set-Network {
         [string]$DefaultGateway,
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [hashtable]$Dns
+        [array]$Dns
     )
 
     $NetworkCards = Get-NetAdapter | Where-Object "MediaConnectionState" -Match "Connected" | Select-Object *

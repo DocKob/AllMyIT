@@ -144,11 +144,8 @@ function Set-ConfigMode {
         netsh advfirewall set allprofiles state off
         Enable-WSManCredSSP -Role server
     }
-    elseif ($IsEnabled -eq $false) {
-        netsh advfirewall set allprofiles state on
-        Disable-WSManCredSSP -Role Server
-    }
 }
+
 
 # Autorun with config file
 function Set-Accessibility {
@@ -165,8 +162,7 @@ function Set-Accessibility {
         Enable-PSRemoting -Force
         Install-WinRm -StartService $True
     }
-    elseif ($IsEnabled -eq $false) {
-    }  
+
 }
 
 function Test-GroupMember {

@@ -67,7 +67,10 @@ Q: Press Q to exist
                 Read-Host "Closing..., press enter"
                 Return
             }
-            Default { Start-Sleep -milliseconds 100 }
+            Default {
+                Clear-Host
+                Start-Sleep -milliseconds 100 
+            }
         } 
     } While ($True)
 }
