@@ -1,6 +1,10 @@
 # Getting started
 
-AllMyIT is a Powershell Module. Made to manage Microsoft services, cloud and on premise !
+AllMyIT is a Powershell module for configuring Windows and Windows Server like a pro ! Automation and optimization !
+
+French:
+
+AllMyIT est un module Powershell permettant de configurer Windows et Windows Server comme un pro ! Automatisation et optimisation !
 
 ![AllMyIT Alpha 3.1.1](https://i2.wp.com/hitea.fr/wp-content/uploads/2019/11/AllMyIT_Alpha_2.jpg?fit=695%2C258&ssl=1)
 
@@ -31,8 +35,10 @@ View on GitHub: [github.com/DocKob/AllMyIT](https://github.com/DocKob/AllMyIT)
 ## From PowerShell Gallery
 
 ```powershell
-    Soon
+    Install-Module -Name AllMyIT
 ```
+
+See module page: [powershellgallery.com/packages/AllMyIT](https://www.powershellgallery.com/packages/AllMyIT)
 
 ## From Source
 
