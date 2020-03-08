@@ -146,7 +146,6 @@ function Set-ConfigMode {
     }
 }
 
-
 # Autorun with config file
 function Set-Accessibility {
     [CmdletBinding(

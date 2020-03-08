@@ -4,6 +4,13 @@ function Invoke-Ami {
     )]
     param ()
 
+    if (!(Test-Path ("HKLM:\SOFTWARE\HiteaNet\AllMyIT")) -or !(Test-Path ("C:\AllMyIT"))) {
+        Install-Ami
+    }
+    else {
+        Write-Host "AllMyCloud Already installed !"
+    }
+
     $MenuTitle = " Run AllMyIT Wizard"
     $WizardMenu = @"
 

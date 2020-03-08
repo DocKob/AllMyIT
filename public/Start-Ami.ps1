@@ -8,6 +8,13 @@ function Start-Ami {
         $ProfilePath
     )
 
+    if (!(Test-Path ("HKLM:\SOFTWARE\HiteaNet\AllMyIT")) -or !(Test-Path ("C:\AllMyIT"))) {
+        Install-Ami
+    }
+    else {
+        Write-Host "AllMyCloud Already installed !"
+    }
+
     $configuration = Confirm-Configuration -Profile "Config" -Configuration (Import-Configuration -Profile $ProfilePath)
 
     if ([bool]($configuration.PSobject.Properties.name -match "New-LocalAdmin")) {

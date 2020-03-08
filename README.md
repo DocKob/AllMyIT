@@ -61,16 +61,6 @@ Run Powershell as Administrator :
 ## Usage
 
 ```powershell
-    # Install AllMyIT in C:\AllMyIT by default
-    Install-Ami
-
-    # You can install AMI with a json config file
-    Install-Ami -ProfilePath "PATH"
-```
-
-See more about install file : [dockob.github.io/AllMyIT/installfile](https://dockob.github.io/AllMyIT/installfile/)
-
-```powershell
     # Invoke AllMyIT module in Wizard mode
     Invoke-Ami
 ```
@@ -81,5 +71,3 @@ See more about install file : [dockob.github.io/AllMyIT/installfile](https://doc
 ```
 
 See more about config file : [dockob.github.io/AllMyIT/configfile](https://dockob.github.io/AllMyIT/configfile/)
-
-And see more about app usage : [dockob.github.io/AllMyIT/usage](https://dockob.github.io/AllMyIT/usage/)

@@ -1,3 +1,31 @@
+function Install-Ami {
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
+    param (        
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        $ProfilePath
+    )
+
+    $RegPath = "HKLM:\SOFTWARE\"
+    $InstallPath = "C:\AllMyIT"
+    $AmiVersion = ((Get-Module AllMyIT).Version)
+
+    if (!(Test-Path (Join-Path $RegPath "HiteaNet"))) {
+        New-Item -Path $RegPath -Name "HiteaNet"
+    }
+
+    New-Folders -Folders @("export", "temp", "ps-modules", "tools", "config") -Path $InstallPath
+    # Copy-Item -Path (Join-Path $BaseFolder "example") -Filter *.json -Destination (Join-Path $InstallPath "config") –Recurse
+    Set-RegKey -Key "Installed" -Value $true -Type "String"
+    Set-RegKey -Key "InstallPath" -Value $InstallPath -Type "String"
+    Set-RegKey -Key "AmiVersion" -Value ([string]$AmiVersion.Major + "." + [string]$AmiVersion.Minor) -Type "String"
+    Install-PackageStore -Name Nuget
+    Get-DeviceInfos -Export $true
+    Install-Modules -Modules @("PendingReboot", "PSWindowsUpdate")
+}
+
 Function Invoke-Menu {
     [CmdletBinding(
         SupportsShouldProcess = $true
@@ -123,7 +151,7 @@ function Import-Template() {
         [string]$Profile
     )
 
-    $filename = (Join-Path $BaseFolder ("config/" + $Profile + ".json"))
+    $filename = (Join-Path $BaseFolder ("template/" + $Profile + ".json"))
 
     if (Test-Path $filename) {
         $Template = (Get-Content $filename | Out-String | ConvertFrom-Json)

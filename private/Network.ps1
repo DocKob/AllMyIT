@@ -1,3 +1,4 @@
+<#
 function Test-DNS {
     param([string]$Destination, [string]$Port)
     $Socket = New-Object Net.Sockets.TcpClient
@@ -6,6 +7,7 @@ function Test-DNS {
     Return $Socket.Connected
     $Socket.close()
 }
+#>
 
 # Autorun with config file
 function Set-Network {

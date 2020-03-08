@@ -14,11 +14,11 @@ function Set-RegKey {
         $Type
     )
 
-    $BasePath = "HKLM:\SOFTWARE\"
+    $BasePath = "HKLM:\SOFTWARE\HiteaNet\"
 
     if (!(Test-Path (Join-Path $BasePath "AllMyIT"))) {
         New-Item -Path $BasePath -Name "AllMyIT"
-        # New-PSDrive -Name "AllMyIT" -PSProvider "Registry" -Root "HKLM:\SOFTWARE\AllMyIT"
+        # New-PSDrive -Name "AllMyCloud" -PSProvider "Registry" -Root "HKLM:\SOFTWARE\AllMyCloud"
     }
 
     $BasePath = (Join-Path $BasePath "AllMyIT")
@@ -40,7 +40,7 @@ function Get-RegKey {
         $Key
     )
 
-    $BasePath = "HKLM:\SOFTWARE\AllMyIT"
+    $BasePath = "HKLM:\SOFTWARE\HiteaNet\AllMyIT"
 
     $RegKey = Get-ItemProperty -Path $BasePath -Name $Key
 
@@ -60,10 +60,10 @@ function Get-AmiReg {
     Push-Location
     Set-Location -Path $Path
     Get-Item . |
-        Select-Object -ExpandProperty property |
-        ForEach-Object {
-            $AmiReg | Add-Member -MemberType NoteProperty -Name $_ -Value (Get-ItemProperty -Path . -Name $_).$_
-        }
+    Select-Object -ExpandProperty property |
+    ForEach-Object {
+        $AmiReg | Add-Member -MemberType NoteProperty -Name $_ -Value (Get-ItemProperty -Path . -Name $_).$_
+    }
     Pop-Location
     Return $AmiReg
 }
