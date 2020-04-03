@@ -9,7 +9,7 @@ function Install-Ami {
     )
 
     $RegPath = "HKLM:\SOFTWARE\"
-    $InstallPath = "C:\AllMyIT"
+    $InstallPath = "C:\HiteaNet\AllMyIT"
     $AmiVersion = ((Get-Module AllMyIT).Version)
 
     if (!(Test-Path (Join-Path $RegPath "HiteaNet"))) {
@@ -17,7 +17,7 @@ function Install-Ami {
     }
 
     New-Folders -Folders @("export", "temp", "ps-modules", "tools", "config") -Path $InstallPath
-    # Copy-Item -Path (Join-Path $BaseFolder "example") -Filter *.json -Destination (Join-Path $InstallPath "config") –Recurse
+    Get-ChildItem -Path (Join-Path $BaseFolder "example") | Resolve-Path | foreach { Copy-Item $_ -Destination (Join-Path $InstallPath "config") }
     Set-RegKey -Key "Installed" -Value $true -Type "String"
     Set-RegKey -Key "InstallPath" -Value $InstallPath -Type "String"
     Set-RegKey -Key "AmiVersion" -Value ([string]$AmiVersion.Major + "." + [string]$AmiVersion.Minor) -Type "String"

@@ -8,7 +8,7 @@ function Start-Ami {
         $ProfilePath
     )
 
-    if (!(Test-Path ("HKLM:\SOFTWARE\HiteaNet\AllMyIT")) -or !(Test-Path ("C:\AllMyIT"))) {
+    if (!(Test-Path ("HKLM:\SOFTWARE\HiteaNet\AllMyIT")) -or !(Test-Path ("C:\HiteaNet\AllMyIT"))) {
         Install-Ami
     }
     else {
