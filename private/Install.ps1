@@ -76,131 +76,80 @@ function Install-Features {
 }
 
 # Autorun with config file
-function Install-FromNinite {
+Function Install-Apps {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
     param(
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [array]$Apps
-    )
-    Write-Host "Downloading Ninite ..."
-   
-    $ofs = '-'
-    $niniteurl = "https://ninite.com/" + $Apps + "/ninite.exe"
-    $output = (Join-Path (Get-RegKey -Key "InstallPath") "\temp\ninite.exe")
-    if (Test-Path $Output) {
-        Write-Verbose -Message "File alreday exist"
-    }
-    else {
-        Invoke-WebRequest $niniteurl -OutFile $output
-    }
-    & $output
-    
-}
-
-# Autorun with config file
-function Install-FromChocolatey {
-    [CmdletBinding(
-        SupportsShouldProcess = $true
-    )]
-    param(
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [array]$Apps
-    )
-    If (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
-        Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    }
-
-    ForEach ($PackageName in $Apps) {
-        choco install $PackageName -y
-    }
-}
-
-# Autorun with config file
-function Install-FromUrl {
-    [CmdletBinding(
-        SupportsShouldProcess = $true
-    )]
-    param(
+        [ValidateSet("Ninite", "Chocolatey", "Url")]
+        [string]$Installer,
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [array]$Apps,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [bool]$Lnk = $false
+        [bool]$Lnk = $false,
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [bool]$ExecuteExe = $false,
+        [Parameter(Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [bool]$UnzipArchives = $false
     )
-    ForEach ($PackageUrl in $Apps) {
-        $OutputFile = Split-Path $PackageUrl -leaf
-        $Output = (Join-Path (Get-RegKey -Key "InstallPath") ("\temp\" + $OutputFile))
-        Write-Host "Downloading from $($PackageUrl)"
-        if (Test-Path $Output) {
-            Write-Verbose -Message "File alreday exist"
-        }
-        else {
-            Start-BitsTransfer -Source $PackageUrl -Destination $Output
-        }
-        if ($ExecuteExe -eq $true) {
 
+    Switch ($Installer) {
+        "Ninite" {
+            Write-Host "Downloading Ninite ..."
+   
+            $ofs = '-'
+            $niniteurl = "https://ninite.com/" + $Apps + "/ninite.exe"
+            $output = (Join-Path (Get-RegKey -Key "InstallPath") "\temp\ninite.exe")
+            if (Test-Path $Output) {
+                Write-Verbose -Message "File alreday exist"
+            }
+            else {
+                Invoke-WebRequest $niniteurl -OutFile $output
+            }
+            & $output
         } 
-        if ($UnzipArchives -eq $true) {
+        "Chocolatey" {
+            If (!(Test-Path -Path "$env:ProgramData\Chocolatey")) {
+                Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+            }
 
-        } 
-        if ($Lnk -eq $true) {
-            $ShortcutFile = "$env:Public\Desktop\" + $OutputFile.name + ".lnk"
-            $WScriptShell = New-Object -ComObject WScript.Shell
-            $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-            $Shortcut.TargetPath = $Output
-            $Shortcut.Save()
-            Write-Host "Shortcut created"
+            ForEach ($PackageName in $Apps) {
+                choco install $PackageName -y
+            }
         }
-    } 
-}
+        "Url" {
+            ForEach ($PackageUrl in $Apps) {
+                $OutputFile = Split-Path $PackageUrl -leaf
+                $Output = (Join-Path (Get-RegKey -Key "InstallPath") ("\temp\" + $OutputFile))
+                Write-Host "Downloading from $($PackageUrl)"
+                if (Test-Path $Output) {
+                    Write-Verbose -Message "File alreday exist"
+                }
+                else {
+                    Start-BitsTransfer -Source $PackageUrl -Destination $Output
+                }
+                if ($ExecuteExe -eq $true) {
 
-# Autorun with config file
-function Install-FromBlob {
-    param (
-        [System.String]$ZipSourceFiles = "",
-        [system.string]$IntuneProgramDir = "$env:APPDATA\Intune",
-        [System.String]$FullEXEDir = "$IntuneProgramDir\Folder\setup.exe",
-        [System.String]$ZipLocation = "$IntuneProgramDir\Package.zip",
-        [System.String]$TempNetworkZip = "\\Server\Intune$\Package.zip"
-    )
-    If ((Test-Path $TempNetworkZip) -eq $False) {
-        #Start download of the source files from Azure Blob to the network cache location
-        Start-BitsTransfer -Source $ZipSourceFiles -Destination $TempNetworkZip
+                } 
+                if ($UnzipArchives -eq $true) {
 
-        #Check to see if the local cache directory is present
-        If ((Test-Path -Path $IntuneProgramDir) -eq $False) {
-            #Create the local cache directory
-            New-Item -ItemType Directory $IntuneProgramDir -Force -Confirm:$False
+                } 
+                if ($Lnk -eq $true) {
+                    $ShortcutFile = "$env:Public\Desktop\" + $OutputFile.name + ".lnk"
+                    $WScriptShell = New-Object -ComObject WScript.Shell
+                    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+                    $Shortcut.TargetPath = $Output
+                    $Shortcut.Save()
+                    Write-Host "Shortcut created"
+                }
+            } 
         }
-
-        #Copy the binaries from the network cache to the local computer cache
-        Copy-Item $TempNetworkZip -Destination $IntuneProgramDir  -Force
-    
-        #Extract the install binaries
-        Expand-Archive -Path $ZipLocation -DestinationPath $IntuneProgramDir -Force
-
-        #Install the program
-        Start-Process "$FullEXEDir" -ArgumentList "ARGS"
-    }
-    Else {
-        #Check to see if the local cache directory is present
-        If ((Test-Path -Path $IntuneProgramDir) -eq $False) {
-            #Create the local cache directory
-            New-Item -ItemType Directory $IntuneProgramDir -Force -Confirm:$False
-        }
-
-        #Copy the installer binaries from the network cache location to the local computer cache
-        Copy-Item $TempNetworkZip -Destination $IntuneProgramDir  -Force
-    
-        #Extract the install binaries
-        Expand-Archive -Path $ZipLocation -DestinationPath $IntuneProgramDir -Force
-
-        #Install the program
-        Start-Process "$FullEXEDir" -ArgumentList "ARGS"
+        Default { Return }
     }
 }
