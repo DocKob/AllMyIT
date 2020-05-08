@@ -351,13 +351,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#remove-temp" class="md-nav__link">
-    Remove-Temp
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -370,20 +363,6 @@
   
     <nav class="md-nav">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-certificate" class="md-nav__link">
-    Install-Certificate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restart-service" class="md-nav__link">
-    Restart-Service
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#new-localadmin" class="md-nav__link">
@@ -511,13 +490,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#remove-temp" class="md-nav__link">
-    Remove-Temp
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -530,20 +502,6 @@
   
     <nav class="md-nav">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-certificate" class="md-nav__link">
-    Install-Certificate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restart-service" class="md-nav__link">
-    Restart-Service
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#new-localadmin" class="md-nav__link">
@@ -691,49 +649,7 @@
 
 
 <p>This function list all uninitialized disk and ask you if you want to configure it (Letter, Name, Size ...)</p>
-<h3 id="remove-temp">Remove-Temp</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Remove-Temp&quot;</span><span class="p">:</span> <span class="err">{</span>
-
-<span class="ss">&quot;AddFolder&quot;</span><span class="p">:</span> <span class="ss">&quot;None&quot;</span><span class="p">,</span>
-
-<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
-
-<span class="err">}</span>
-</pre></div>
-
-
-<p>Perform a disk cleanup and temp folders cleanup</p>
-<p>Set "AddFolder" to "Lenovo" for add the lenovo specifics folders</p>
 <h2 id="device-section">Device section</h2>
-<h3 id="install-certificate">Install-Certificate</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Install-Certificate&quot;</span><span class="p">:</span> <span class="err">{</span>
-
-<span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;AllMyIT&quot;</span><span class="p">,</span>
-
-<span class="ss">&quot;Export&quot;</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span>
-
-<span class="ss">&quot;Password&quot;</span><span class="p">:</span> <span class="ss">&quot;Password&quot;</span><span class="p">,</span>
-
-<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
-
-<span class="err">}</span>
-</pre></div>
-
-
-<p>Create a certificat for password encryption.</p>
-<p>Set the Name and the password. If export is true, the certificate is exported to "Install_Path\export"</p>
-<h3 id="restart-service">Restart-Service</h3>
-<div class="codehilite"><pre><span></span><span class="ss">&quot;Restart-Service&quot;</span><span class="p">:</span> <span class="err">{</span>
-
-<span class="ss">&quot;Name&quot;</span><span class="p">:</span> <span class="ss">&quot;NlaSvc&quot;</span><span class="p">,</span>
-
-<span class="ss">&quot;Wizard&quot;</span><span class="p">:</span> <span class="k">false</span>
-
-<span class="err">}</span>
-</pre></div>
-
-
-<p>Set services name for restart (dependancies auto restart)</p>
 <h3 id="new-localadmin">New-LocalAdmin</h3>
 <div class="codehilite"><pre><span></span><span class="ss">&quot;New-LocalAdmin&quot;</span><span class="p">:</span> <span class="err">{</span>
 
