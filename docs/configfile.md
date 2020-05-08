@@ -106,51 +106,8 @@ Set the IP address, the application asks you for which card you want to set the 
 
 This function list all uninitialized disk and ask you if you want to configure it (Letter, Name, Size ...)
 
-### Remove-Temp
-
-    "Remove-Temp": {
-    
-    "AddFolder": "None",
-    
-    "Wizard": false
-    
-    }
-
-Perform a disk cleanup and temp folders cleanup
-
-Set "AddFolder" to "Lenovo" for add the lenovo specifics folders
 
 ## Device section
-
-### Install-Certificate
-
-    "Install-Certificate": {
-    
-    "Name": "AllMyIT",
-    
-    "Export": true,
-    
-    "Password": "Password",
-    
-    "Wizard": false
-    
-    }
-
-Create a certificat for password encryption.
-
-Set the Name and the password. If export is true, the certificate is exported to "Install_Path\export"
-
-### Restart-Service
-
-    "Restart-Service": {
-    
-    "Name": "NlaSvc",
-    
-    "Wizard": false
-    
-    }
-
-Set services name for restart (dependancies auto restart)
 
 ### New-LocalAdmin
 

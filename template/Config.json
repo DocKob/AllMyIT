@@ -17,22 +17,11 @@
         "ExecuteExe": null,
         "UnzipArchives": null
     },
-    "Install-Certificate": {
-        "Name": null,
-        "Export": null,
-        "Password": null
-    },
     "Install-Features": {
         "Features": null
     },
     "Set-Storage": {
         "Run": null
-    },
-    "Remove-Temp": {
-        "AddFolder": null
-    },
-    "Restart-Service": {
-        "Name": null
     },
     "Set-ConfigMode": {
         "IsEnabled": null

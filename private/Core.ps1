@@ -2,67 +2,21 @@ function Install-Ami {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
-    param (        
-        [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        $ProfilePath
-    )
+    param ()
 
-    $RegPath = "HKLM:\SOFTWARE\"
     $InstallPath = "C:\HiteaNet\AllMyIT"
     $AmiVersion = ((Get-Module AllMyIT).Version)
 
-    if (!(Test-Path (Join-Path $RegPath "HiteaNet"))) {
-        New-Item -Path $RegPath -Name "HiteaNet"
+    if (Test-Path "$($BaseFolder)/Config/Installed.txt") {
+        return
     }
 
-    New-Folders -Folders @("export", "temp", "ps-modules", "tools", "config") -Path $InstallPath
-    Get-ChildItem -Path (Join-Path $BaseFolder "example") | Resolve-Path | foreach { Copy-Item $_ -Destination (Join-Path $InstallPath "config") }
-    Set-RegKey -Key "Installed" -Value $true -Type "String"
+    New-Folders -Folders @("export", "temp", "tools", "config") -Path $InstallPath
+    Get-ChildItem -Path (Join-Path $BaseFolder "example") | Resolve-Path | ForEach-Object { Copy-Item $_ -Destination (Join-Path $InstallPath "config") }
     Set-RegKey -Key "InstallPath" -Value $InstallPath -Type "String"
     Set-RegKey -Key "AmiVersion" -Value ([string]$AmiVersion.Major + "." + [string]$AmiVersion.Minor) -Type "String"
     Install-PackageStore -Name Nuget
-    Get-DeviceInfos -Export $true
-    Install-Modules -Modules @("PendingReboot", "PSWindowsUpdate")
-}
-
-Function Invoke-Menu {
-    [CmdletBinding(
-        SupportsShouldProcess = $true
-    )]
-    Param(
-        [Parameter(Position = 0, Mandatory = $True, HelpMessage = "Choice an Option !")]
-        [ValidateNotNullOrEmpty()]
-        [string]$Menu,
-        [Parameter(Position = 1)]
-        [ValidateNotNullOrEmpty()]
-        [string]$Title = "",
-        [Alias("cls")]
-        [switch]$ClearScreen
-    )
-
-    if ($ClearScreen) { 
-        Clear-Host 
-    }
-
-    $menuprompt = "-" * $title.Length
-    $menuprompt += "`n"
-    $menuprompt += "-" * $title.Length
-    $menuprompt += "`n"
-    $menuPrompt += $title
-    $menuprompt += "`n"
-    $menuprompt += "-" * $title.Length
-    $menuprompt += "`n"
-    $menuprompt += "-" * $title.Length
-    $menuprompt += "`n"
-    $menuprompt += "`n"
-    $menuPrompt += $menu
-    $menuprompt += "`n`n`n"
-    $menuprompt += "Choose an option "
-    
- 
-    Read-Host -Prompt $menuprompt
- 
+    Get-Date | Out-File -Encoding UTF8 -FilePath "$($BaseFolder)/Private/Installed.txt"
 }
 
 function Import-Configuration() {
@@ -108,9 +62,6 @@ function Confirm-Configuration() {
     Param(
         [Parameter(Mandatory = $True)]
         [ValidateNotNullOrEmpty()]
-        $Profile,
-        [Parameter(Mandatory = $True)]
-        [ValidateNotNullOrEmpty()]
         $Configuration,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
@@ -118,7 +69,7 @@ function Confirm-Configuration() {
         
     )
 
-    $Template = Import-Template -Profile $Profile
+    $Template = Import-Template
 
     foreach ($ConfigItem in $Configuration.PSobject.Properties) {
         if ([bool]($Template.PSobject.Properties.name -match $ConfigItem.Name)) { 
@@ -145,13 +96,9 @@ function Import-Template() {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
-    Param(
-        [Parameter(Mandatory = $True)]
-        [ValidateNotNullOrEmpty()]
-        [string]$Profile
-    )
+    Param()
 
-    $filename = (Join-Path $BaseFolder ("template/" + $Profile + ".json"))
+    $filename = (Join-Path $BaseFolder ("template/Config.json"))
 
     if (Test-Path $filename) {
         $Template = (Get-Content $filename | Out-String | ConvertFrom-Json)
@@ -178,54 +125,126 @@ function Test-Command {
     $found
 }
 
-Function Get-DeviceInfos {
+function Test-HtPsRunAs {  
+    $user = [Security.Principal.WindowsIdentity]::GetCurrent();
+    (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
+}
+
+Function New-Folders {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
     param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Folders,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Path
+    )
+    ForEach ($Folder in $Folders) {
+        $location = (Join-Path $Path $Folder)
+        if (!(Test-Path $location)) {
+            New-Item -Path $location -ItemType Directory | Out-Null
+            Write-Verbose -Message "Create folder $($Folder) at location $($location)"
+        }
+        else {
+            Write-Verbose -Message "Folder $($Folder) already exist at location $($location)"
+        }
+    } 
+}
+
+function Test-GroupMember {
+    param (
+        [Parameter(Mandatory = $true)]
+        $User,
+        [Parameter(Mandatory = $false)]
+        $Group = "Administrateurs"
+    )
+    
+    $groupObj = [ADSI]"WinNT://./$Group,group" 
+    $membersObj = @($groupObj.psbase.Invoke("Members"))
+    $members = ($membersObj | foreach { $_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null) })
+
+    If ($members -contains $User) {
+        return $true
+    }
+    Else {
+        return $false
+    }
+}
+
+function Install-WinRm {
+    param(
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [bool]$Export = $true
+        [bool]$StartService = $false
+    )
+    
+    winrm quickconfig -q
+
+    if ($StartService) {
+        Start-Service WinRM
+        Set-Service WinRM -StartupType Automatic
+    }
+}
+
+function Install-PackageStore {
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name
     )
 
-    $os = Get-WmiObject -class win32_operatingsystem | Select-Object *
-    $pc = Get-WmiObject -Class Win32_ComputerSystem | Select-Object *
-    $pf = Get-CimInstance -Class Win32_PageFileUsage | Select-Object *
+    Install-PackageProvider -Name $Name -Force
+}
 
-    $DeviceInfo = @{ }
-    $DeviceInfo.add("OperatingSystem", $os.name.split("|")[0])
-    $DeviceInfo.add("Version", $os.Version)
-    $DeviceInfo.add("Architecture", $os.OSArchitecture)
-    $DeviceInfo.add("SerialNumber", $os.SerialNumber)
-    $DeviceInfo.add("PsVersion", [string]($PSVersionTable.PSVersion.Major) + "." + [string]($PSVersionTable.PSVersion.Minor))
+function Set-RegKey {
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Key,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Value,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Type
+    )
 
-    $DeviceInfo.add("SystemName", $env:COMPUTERNAME)
-    $DeviceInfo.add("Domain", $pc.PartOfDomain)
-    $DeviceInfo.add("WorkGroup", $pc.Workgroup)
-    $DeviceInfo.add("CurrentUserName", $env:UserName)
+    $BasePath = "HKLM:\SOFTWARE\HiteaNet\"
 
-    $PageFileStats = [PSCustomObject]@{
-        Computer              = $computer
-        FilePath              = $pf.Description
-        AutoManagedPageFile   = $pc.AutomaticManagedPagefile
-        "TotalSize(in MB)"    = $pf.AllocatedBaseSize
-        "CurrentUsage(in MB)" = $pf.CurrentUsage
-        "PeakUsage(in MB)"    = $pf.PeakUsage
-        TempPageFileInUse     = $pf.TempPageFile
+    if (!(Test-Path (Join-Path $BasePath "AllMyIT"))) {
+        New-Item -Path $BasePath -Name "AllMyIT"
+        # New-PSDrive -Name "AllMyCloud" -PSProvider "Registry" -Root "HKLM:\SOFTWARE\AllMyCloud"
     }
 
-    $DeviceInfo.add("PageFileSize", $PageFileStats.("TotalSize(in MB)"))
-    $DeviceInfo.add("PageFileCurrentSize", $PageFileStats.("CurrentUsage(in MB)"))
-    $DeviceInfo.add("PageFilePeakSize", $PageFileStats.("PeakUsage(in MB)"))
+    $BasePath = (Join-Path $BasePath "AllMyIT")
 
-    $out += New-Object PSObject -Property $DeviceInfo | Select-Object `
-        "SystemName", "SerialNumber", "OperatingSystem", `
-        "Version", "Architecture", "PageFileSize", "PageFileCurrentSize", "PageFilePeakSize", "PsVersion", "Domain", "WorkGroup", "CurrentUserName"
-
-    if ($Export -eq $true) {
-
-        Write-Verbose -Message "Config file exported in export folder"
-        $out | Export-CSV (Join-Path (Get-RegKey -Key "InstallPath") "\export\Device_Infos.csv") -Delimiter ";" -NoTypeInformation
+    if (Get-ItemProperty -Path $BasePath -Name $Key) {
+        Remove-ItemProperty -Path $BasePath -Name $Key -Force
     }
-    return $out
+    New-ItemProperty -Path $BasePath -Name $Key -Value $Value -PropertyType $Type
+
+}
+
+function Get-RegKey {
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
+    param(
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $Key
+    )
+
+    $BasePath = "HKLM:\SOFTWARE\HiteaNet\AllMyIT"
+
+    $RegKey = Get-ItemProperty -Path $BasePath -Name $Key
+
+    return $RegKey.$Key
+    
 }

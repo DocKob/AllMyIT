@@ -1,10 +1,6 @@
 # Getting started
 
-AllMyIT is a Powershell module for configuring Windows and Windows Server like a pro ! Automation and optimization !
-
-French:
-
-AllMyIT est un module Powershell permettant de configurer Windows et Windows Server comme un pro ! Automatisation et optimisation !
+AllMyIT est un module Powershell permettant de configurer Windows et Windows Server avec un fichier JSON.
 
 ## Read the doc
 
@@ -57,11 +53,6 @@ Run Powershell as Administrator :
 ```
 
 ## Usage
-
-```powershell
-    # Invoke AllMyIT module in Wizard mode
-    Invoke-Ami
-```
 
 ```powershell
     # Run AllMyIT module in ConfigFile mode

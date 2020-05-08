@@ -1,51 +1,3 @@
-function Install-WinRm {
-    param(
-        [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [bool]$StartService = $false
-    )
-    
-    winrm quickconfig -q
-
-    if ($StartService) {
-        Start-Service WinRM
-        Set-Service WinRM -StartupType Automatic
-    }
-}
-
-function Install-PackageStore {
-    param(
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$Name
-    )
-
-    Install-PackageProvider -Name $Name -Force
-}
-
-function Install-Modules {
-    [CmdletBinding(
-        SupportsShouldProcess = $true
-    )]
-    param(
-        [Parameter(Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        $Modules
-    )
-
-    ForEach ($Module in $Modules) {
-        $Destination = (Join-Path (Get-RegKey -Key "InstallPath") "\ps-modules")
-        if (-not (Test-Path (Join-Path $Destination $Module))) {
-            Find-Module -Name $Module -Repository 'PSGallery' | Save-Module -Path $Destination -Force | Out-Null
-        }
-        else {
-            Write-Verbose -Message "Module already exists"
-        }
-        Import-Module -FullyQualifiedName (Join-Path $Destination $Module)
-    }
-}
-
-# Autorun with config file
 function Install-Features {
     [CmdletBinding(
         SupportsShouldProcess = $true
@@ -75,7 +27,6 @@ function Install-Features {
     }
 }
 
-# Autorun with config file
 Function Install-Apps {
     [CmdletBinding(
         SupportsShouldProcess = $true

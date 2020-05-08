@@ -1,25 +1,22 @@
 ﻿{
-    "New-LocalAdmin":  {
-                           "NewLocalAdmin":  "Admin",
-                           "Password":  "Password",
-                           "Wizard":  false
-                       },
-    "Install-Apps":  {
-                         "AppsUrl":  [
-                                         "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"
-                                     ],
-                         "Ninite":  [
-                                        "firefox"
-                                    ],
-                         "Chocolatey":  [
-                                            "7zip"
-                                        ],
-                         "Lnk":  false,
-                         "ExecuteExe":  false,
-                         "UnzipArchives":  false,
-                         "Wizard":  false
-                     },
-    "Remove-Temp":  {
-                        "AddFolder":  "None"
-                    }
+    "New-LocalAdmin": {
+        "NewLocalAdmin": "Admin",
+        "Password": "Password",
+        "Wizard": false
+    },
+    "Install-Apps": {
+        "AppsUrl": [
+            "https://hitea.fr/wp-content/uploads/2019/09/BleachBit-2.2-portable.zip"
+        ],
+        "Ninite": [
+            "firefox"
+        ],
+        "Chocolatey": [
+            "7zip"
+        ],
+        "Lnk": false,
+        "ExecuteExe": false,
+        "UnzipArchives": false,
+        "Wizard": false
+    }
 }
