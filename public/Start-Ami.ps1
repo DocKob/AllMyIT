@@ -13,13 +13,17 @@ function Start-Ami {
         pause
         exit
     }
+
+    $InstallPath = "C:\HiteaNet\AllMyIT"
     
-    if (!(Test-Path ("HKLM:\SOFTWARE\HiteaNet\AllMyIT")) -or !(Test-Path "$($BaseFolder)/Private/Installed.txt")) {
-        Install-Ami
+    if (!(Test-Path ("HKLM:\SOFTWARE\HiteaNet\AllMyIT")) -or !(Test-Path "$($BaseFolder)/Private/Installed.txt") -or !(Test-Path $InstallPath)) {
+        Install-Ami -InstallPath $InstallPath
     }
     else {
         Write-Host "Install folder is Already created !"
     }
+
+    Read-Host "Start..., press enter"
 
     if ([string]$ProfilePath) {
         $configuration = Confirm-Configuration -Configuration (Import-Configuration -Profile $ProfilePath)
@@ -64,6 +68,6 @@ function Start-Ami {
         Save-Configuration -Configuration $configuration
     }
     
-    Read-Host "Closing..., press enter"
+    Read-Host "End..., press enter"
 
 }

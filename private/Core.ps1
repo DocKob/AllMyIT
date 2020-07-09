@@ -2,12 +2,15 @@ function Install-Ami {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
-    param ()
-
-    $InstallPath = "C:\HiteaNet\AllMyIT"
+    param (        
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        $InstallPath
+    )
+    
     $AmiVersion = ((Get-Module AllMyIT).Version)
 
-    if (Test-Path "$($BaseFolder)/Config/Installed.txt") {
+    if ((Test-Path "$($BaseFolder)/Config/Installed.txt") -and (Test-Path $InstallPath)) {
         return
     }
 
